@@ -1,0 +1,55 @@
+EVIDENCIA - CLUSTERING DE PERFILES DIARIOS (K-MEANS, SIAPE)
+Fecha de ejecución: 2026-11-14 21:27:13  |  Semilla: 42
+Perfiles instalación-día completos (24 h): 1750  |  Vector: 24 horas / promedio del día
+
+  k     inercia  silhouette
+  2     1374.04      0.5816
+  3      704.13      0.6259
+  4      416.80      0.6432
+  5      239.22      0.6693
+  6      167.56      0.6624
+  7      151.15      0.5930
+  8      139.73      0.4397
+
+Codo (máxima curvatura): k=4
+Regla: k >= 4, mayor k con silhouette a menos de 0.01 del máximo  ->  k elegido = 6, silhouette = 0.6624
+
+Cluster: tamaño, distribución por tipo y descripción
+  Cluster 0: n=224  tipos={'residencial': 0, 'comercial': 0, 'industrial': 0, 'educativa': 224}
+      224 días; tipo dominante: educativa (100 %); hora pico: 13:00; con pico marcado
+  Cluster 1: n=350  tipos={'residencial': 0, 'comercial': 0, 'industrial': 350, 'educativa': 0}
+      350 días; tipo dominante: industrial (100 %); hora pico: 13:00; con pico marcado
+  Cluster 2: n=525  tipos={'residencial': 0, 'comercial': 525, 'industrial': 0, 'educativa': 0}
+      525 días; tipo dominante: comercial (100 %); hora pico: 13:00; con pico marcado
+  Cluster 3: n=358  tipos={'residencial': 358, 'comercial': 0, 'industrial': 0, 'educativa': 0}
+      358 días; tipo dominante: residencial (100 %); hora pico: 20:00; con pico marcado
+  Cluster 4: n=167  tipos={'residencial': 167, 'comercial': 0, 'industrial': 0, 'educativa': 0}
+      167 días; tipo dominante: residencial (100 %); hora pico: 20:00; con pico marcado
+  Cluster 5: n=126  tipos={'residencial': 0, 'comercial': 0, 'industrial': 0, 'educativa': 126}
+      126 días; tipo dominante: educativa (100 %); hora pico: 16:00; curva casi plana (sin pico marcado: operación continua o cerrado)
+
+Top 20 días más atípicos (más lejanos a su centroide):
+instalación fecha        cluster  distancia  kWh medio
+RES-001     2026-06-16         4      0.923       1.40
+RES-002     2026-05-20         4      0.898       1.87
+RES-001     2026-06-14         4      0.791       1.52
+RES-002     2026-05-22         3      0.710       1.73
+EDU-001     2026-03-19         0      0.692      42.22
+RES-001     2026-06-19         3      0.635       1.05
+RES-002     2026-05-05         3      0.633       1.74
+RES-002     2026-05-04         3      0.626       1.54
+RES-001     2026-05-28         3      0.619       1.20
+RES-002     2026-06-16         3      0.608       1.70
+RES-001     2026-06-18         3      0.601       1.30
+COM-001     2026-01-15         2      0.600       7.39
+RES-002     2026-06-26         3      0.583       1.75
+RES-001     2026-02-25         3      0.573       1.06
+EDU-001     2026-05-22         0      0.569      46.52
+RES-001     2026-06-07         4      0.564       1.27
+RES-003     2026-03-12         3      0.550       0.61
+RES-002     2026-06-13         4      0.547       2.08
+RES-002     2026-05-07         3      0.546       1.69
+RES-001     2026-06-11         3      0.543       1.12
+
+Modelo: /home/claude/ICD/models/kmeans_perfiles.joblib
+Resumen: /home/claude/ICD/models/clusters_resumen.json

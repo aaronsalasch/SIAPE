@@ -1,0 +1,146 @@
+EVIDENCIA - EJEMPLOS DEL ANALIZADOR DE TEXTO (entrada -> salida)
+========================================================================
+Reportes procesados: 4000 | acierto sobre todo el corpus (incluye datos de entrenamiento, por eso es mayor que el de prueba): 0.968
+
+A) Reportes del corpus (6 positivos/negativos/neutrales al azar + 2 errores del clasificador)
+
+EJEMPLO 1
+  ENTRADA        : Queja/sugerencia: Logramos ahorrar 32,456 kWh gracias al ajuste. Mi código de instalación es EDU-002. Sigan así.
+  Etiqueta real  : positivo
+  Normalizado    : queja/sugerencia: logramos ahorrar gracias al ajuste. mi código de instalación es . sigan así.
+  Tokens         : ['queja', 'sugerencia', 'logramos', 'ahorrar', 'gracias', 'al', 'ajuste', 'mi', 'código', 'de', 'instalación', 'es', 'sigan', 'así']
+  Sin stopwords  : ['queja', 'sugerencia', 'logramos', 'ahorrar', 'gracias', 'ajuste', 'código', 'instalación', 'sigan', 'así']
+  Stems          : ['quej', 'suger', 'logr', 'ahorr', 'grac', 'ajust', 'codig', 'instal', 'sig', 'asi']
+  Lemas          : ['quejar', 'sugerencia', 'logramos', 'ahorrar', 'gracias', 'ajuste', 'código', 'instalación', 'sigan', 'así']
+  SENTIMIENTO    : positivo  {'negativo': 0.0142, 'neutral': 0.0114, 'positivo': 0.9744}
+  ENTIDADES      : [ENERGIA] 32,456 kWh; [CODIGO_INSTALACION] EDU-002
+
+EJEMPLO 2
+  ENTRADA        : Hola, La fuga de corriente en Xalapa es peligrosa, exijo atencion inmediata; no obstante, redujimos el consumo a 754 kWh gracias al ajuste. Hablo de la instalacion RES-003. Repoorto desde Xalapa. Quedo agradecido.
+  Etiqueta real  : positivo
+  Normalizado    : hola, la fuga de corriente en xalapa es peligrosa, exijo atencion inmediata; no obstante, redujimos el consumo a gracias al ajuste. hablo de la instalacion . repoorto desde xalapa. quedo agradecido.
+  Tokens         : ['hola', 'la', 'fuga', 'de', 'corriente', 'en', 'xalapa', 'es', 'peligrosa', 'exijo', 'atencion', 'inmediata', 'no', 'obstante', 'redujimos', 'el', 'consumo', 'a', 'gracias', 'al', 'ajuste', 'hablo', 'de', 'la', 'instalacion', 'repoorto', 'desde', 'xalapa', 'quedo', 'agradecido']
+  Sin stopwords  : ['fuga', 'corriente', 'xalapa', 'peligrosa', 'exijo', 'atencion', 'inmediata', 'no', 'obstante', 'redujimos', 'consumo', 'gracias', 'ajuste', 'hablo', 'instalacion', 'repoorto', 'xalapa', 'quedo', 'agradecido']
+  Stems          : ['fug', 'corrient', 'xalap', 'peligr', 'exij', 'atencion', 'inmediat', 'no', 'obstant', 'reduj', 'consum', 'grac', 'ajust', 'habl', 'instal', 'repoort', 'xalap', 'qued', 'agradec']
+  Lemas          : ['fuga', 'corriente', 'xalapa', 'peligrosa', 'exijo', 'atencion', 'inmediata', 'no', 'obstante', 'redujimos', 'consumir', 'gracias', 'ajuste', 'hablo', 'instalacion', 'repoorto', 'xalapa', 'quedo', 'agradecer']
+  SENTIMIENTO    : positivo  {'negativo': 0.2716, 'neutral': 0.0003, 'positivo': 0.7281}
+  ENTIDADES      : [LUGAR] Xalapa; [ENERGIA] 754 kWh; [CODIGO_INSTALACION] RES-003; [LUGAR] Xalapa
+
+EJEMPLO 3
+  ENTRADA        : Hola, Los cortes de luz en Orizaba son interminables y nos causan pérdidas. Es inaceptable que cobren $71,960 por un consumo que no corresponde.
+  Etiqueta real  : negativo
+  Normalizado    : hola, los cortes de luz en orizaba son interminables y nos causan pérdidas. es inaceptable que cobren por un consumo que no corresponde.
+  Tokens         : ['hola', 'los', 'cortes', 'de', 'luz', 'en', 'orizaba', 'son', 'interminables', 'y', 'nos', 'causan', 'pérdidas', 'es', 'inaceptable', 'que', 'cobren', 'por', 'un', 'consumo', 'que', 'no', 'corresponde']
+  Sin stopwords  : ['cortes', 'luz', 'orizaba', 'interminables', 'causan', 'pérdidas', 'inaceptable', 'cobren', 'consumo', 'no', 'corresponde']
+  Stems          : ['cort', 'luz', 'oriz', 'intermin', 'cau', 'perd', 'inacept', 'cobr', 'consum', 'no', 'correspond']
+  Lemas          : ['corte', 'luz', 'orizaba', 'interminable', 'causan', 'pérdida', 'inaceptable', 'cobrar', 'consumir', 'no', 'corresponde']
+  SENTIMIENTO    : negativo  {'negativo': 0.992, 'neutral': 0.0024, 'positivo': 0.0056}
+  ENTIDADES      : [LUGAR] Orizaba; [MONTO] $71,960
+
+EJEMPLO 4
+  ENTRADA        : cliente indica que se botó el ventilador y hubo riesgo de incendio. el problema empezó el 6 de enero. 😡
+  Etiqueta real  : negativo
+  Normalizado    : cliente indica que se botó el ventilador y hubo riesgo de incendio. el problema empezó el de enero. emojinegativo
+  Tokens         : ['cliente', 'indica', 'que', 'se', 'botó', 'el', 'ventilador', 'y', 'hubo', 'riesgo', 'de', 'incendio', 'el', 'problema', 'empezó', 'el', 'de', 'enero', 'emojinegativo']
+  Sin stopwords  : ['cliente', 'indica', 'botó', 'ventilador', 'riesgo', 'incendio', 'problema', 'empezó', 'emojinegativo']
+  Stems          : ['client', 'ind', 'bot', 'ventil', 'riesg', 'incend', 'problem', 'empez', 'emojinegat']
+  Lemas          : ['cliente', 'indica', 'botó', 'ventilador', 'riesgo', 'incendio', 'problema', 'empezó', 'emojinegativo']
+  SENTIMIENTO    : negativo  {'negativo': 0.9755, 'neutral': 0.0147, 'positivo': 0.0098}
+  ENTIDADES      : [DISPOSITIVO] ventilador; [FECHA] 6 de enero
+
+EJEMPLO 5
+  ENTRADA        : Buen día, Necesito saber si CFE ofrece auditorías energéticas. Registro la lectura del refrigerador: 2,458 kWh. Les escribo desde Córdoba. Quedo al pendiente.
+  Etiqueta real  : neutral
+  Normalizado    : buen día, necesito saber si cfe ofrece auditorías energéticas. registro la lectura del refrigerador: . les escribo desde córdoba. quedo al pendiente.
+  Tokens         : ['buen', 'día', 'necesito', 'saber', 'si', 'cfe', 'ofrece', 'auditorías', 'energéticas', 'registro', 'la', 'lectura', 'del', 'refrigerador', 'les', 'escribo', 'desde', 'córdoba', 'quedo', 'al', 'pendiente']
+  Sin stopwords  : ['buen', 'día', 'necesito', 'saber', 'cfe', 'ofrece', 'auditorías', 'energéticas', 'registro', 'lectura', 'refrigerador', 'escribo', 'córdoba', 'quedo', 'pendiente']
+  Stems          : ['buen', 'dia', 'necesit', 'sab', 'cfe', 'ofrec', 'auditor', 'energet', 'registr', 'lectur', 'refriger', 'escrib', 'cordob', 'qued', 'pendient']
+  Lemas          : ['buen', 'día', 'necesitar', 'saber', 'cfe', 'ofrece', 'auditoría', 'energética', 'registrar', 'lectura', 'refrigerador', 'escribir', 'córdoba', 'quedo', 'pendiente']
+  SENTIMIENTO    : neutral  {'negativo': 0.0146, 'neutral': 0.9753, 'positivo': 0.0101}
+  ENTIDADES      : [ORGANIZACION] CFE; [DISPOSITIVO] refrigerador; [ENERGIA] 2,458 kWh; [LUGAR] Córdoba
+
+EJEMPLO 6
+  ENTRADA        : Estimado personal: Queda registrado el mantenimiento del minisplit como parte del programa. Se solicita informar el estatus del folio FOL-843119. Lectura actual: 14,842 kwh. 😠
+  Etiqueta real  : neutral
+  Normalizado    : estimado personal: queda registrado el mantenimiento del minisplit como parte del programa. se solicita informar el estatus del folio . lectura actual: . emojinegativo
+  Tokens         : ['estimado', 'personal', 'queda', 'registrado', 'el', 'mantenimiento', 'del', 'minisplit', 'como', 'parte', 'del', 'programa', 'se', 'solicita', 'informar', 'el', 'estatus', 'del', 'folio', 'lectura', 'actual', 'emojinegativo']
+  Sin stopwords  : ['personal', 'queda', 'registrado', 'mantenimiento', 'minisplit', 'programa', 'solicita', 'informar', 'estatus', 'lectura', 'actual', 'emojinegativo']
+  Stems          : ['personal', 'qued', 'registr', 'manten', 'minisplit', 'program', 'solicit', 'inform', 'estatu', 'lectur', 'actual', 'emojinegat']
+  Lemas          : ['personal', 'queda', 'registrar', 'mantenimiento', 'minisplit', 'programar', 'solicitar', 'informar', 'estatu', 'lectura', 'actual', 'emojinegativo']
+  SENTIMIENTO    : neutral  {'negativo': 0.0143, 'neutral': 0.983, 'positivo': 0.0026}
+  ENTIDADES      : [DISPOSITIVO] minisplit; [FOLIO] FOL-843119; [ENERGIA] 14,842 kwh
+
+EJEMPLO 7
+  ENTRADA        : Comentario: El horno hace un ruido muy fuerte y huele a quemado. Los cortes de luz en Xalapa son frecuentes y afectan nuestra operación. Espero una respuesta pronta.
+  Etiqueta real  : positivo
+  Normalizado    : comentario: el horno hace un ruido muy fuerte y huele a quemado. los cortes de luz en xalapa son frecuentes y afectan nuestra operación. espero una respuesta pronta.
+  Tokens         : ['comentario', 'el', 'horno', 'hace', 'un', 'ruido', 'muy', 'fuerte', 'y', 'huele', 'a', 'quemado', 'los', 'cortes', 'de', 'luz', 'en', 'xalapa', 'son', 'frecuentes', 'y', 'afectan', 'nuestra', 'operación', 'espero', 'una', 'respuesta', 'pronta']
+  Sin stopwords  : ['comentario', 'horno', 'ruido', 'muy', 'fuerte', 'huele', 'quemado', 'cortes', 'luz', 'xalapa', 'frecuentes', 'afectan', 'operación', 'espero', 'respuesta', 'pronta']
+  Stems          : ['comentar', 'horn', 'ruid', 'muy', 'fuert', 'huel', 'quem', 'cort', 'luz', 'xalap', 'frecuent', 'afect', 'oper', 'esper', 'respuest', 'pront']
+  Lemas          : ['comentario', 'horno', 'ruido', 'muy', 'fuerte', 'oler', 'quemar', 'corte', 'luz', 'xalapa', 'frecuente', 'afectan', 'operación', 'esperar', 'respuesta', 'pronta']
+  SENTIMIENTO    : negativo  {'negativo': 0.9189, 'neutral': 0.0009, 'positivo': 0.0802}
+  ENTIDADES      : [DISPOSITIVO] horno; [LUGAR] Xalapa
+
+EJEMPLO 8
+  ENTRADA        : Estimado personal: Encantado con la rapidez. Las luminarias quedó como nuevo. Pasó el 01/01/2026. Muchas gracias.
+  Etiqueta real  : neutral
+  Normalizado    : estimado personal: encantado con la rapidez. las luminarias quedó como nuevo. pasó el . muchas gracias.
+  Tokens         : ['estimado', 'personal', 'encantado', 'con', 'la', 'rapidez', 'las', 'luminarias', 'quedó', 'como', 'nuevo', 'pasó', 'el', 'muchas', 'gracias']
+  Sin stopwords  : ['personal', 'encantado', 'rapidez', 'luminarias', 'quedó', 'nuevo', 'pasó', 'muchas', 'gracias']
+  Stems          : ['personal', 'encant', 'rapidez', 'luminar', 'qued', 'nuev', 'pas', 'much', 'grac']
+  Lemas          : ['personal', 'encantado', 'rapidez', 'luminaria', 'quedar', 'nuevo', 'pasó', 'mucha', 'gracias']
+  SENTIMIENTO    : positivo  {'negativo': 0.0152, 'neutral': 0.1684, 'positivo': 0.8165}
+  ENTIDADES      : [DISPOSITIVO] luminarias; [FECHA] 01/01/2026
+
+B) Frases nuevas (no están en el corpus)
+
+EJEMPLO 9
+  ENTRADA        : El transformador de IND-001 hizo un ruido horrible ayer a las 22:15 y CFE no responde, folio FOL-445566. Pésimo servicio!!
+  Normalizado    : el transformador de hizo un ruido horrible ayer a las y cfe no responde, folio . pésimo servicio!!
+  Tokens         : ['el', 'transformador', 'de', 'hizo', 'un', 'ruido', 'horrible', 'ayer', 'a', 'las', 'y', 'cfe', 'no', 'responde', 'folio', 'pésimo', 'servicio']
+  Sin stopwords  : ['transformador', 'ruido', 'horrible', 'cfe', 'no', 'responde', 'pésimo', 'servicio']
+  Stems          : ['transform', 'ruid', 'horr', 'cfe', 'no', 'respond', 'pesim', 'servic']
+  Lemas          : ['transformador', 'ruido', 'horrible', 'cfe', 'no', 'responder', 'pésimo', 'servicio']
+  SENTIMIENTO    : negativo  {'negativo': 0.9819, 'neutral': 0.0048, 'positivo': 0.0133}
+  ENTIDADES      : [DISPOSITIVO] transformador; [CODIGO_INSTALACION] IND-001; [FECHA] ayer; [HORA] a las 22:15; [ORGANIZACION] CFE; [FOLIO] FOL-445566
+
+EJEMPLO 10
+  ENTRADA        : Gracias al Ing. Carlos Ruiz por reparar el minisplit en Xalapa, ahora funciona de maravilla 👍
+  Normalizado    : gracias al ing. carlos ruiz por reparar el minisplit en xalapa, ahora funciona de maravilla emojipositivo
+  Tokens         : ['gracias', 'al', 'ing', 'carlos', 'ruiz', 'por', 'reparar', 'el', 'minisplit', 'en', 'xalapa', 'ahora', 'funciona', 'de', 'maravilla', 'emojipositivo']
+  Sin stopwords  : ['gracias', 'ing', 'carlos', 'ruiz', 'reparar', 'minisplit', 'xalapa', 'funciona', 'maravilla', 'emojipositivo']
+  Stems          : ['grac', 'ing', 'carl', 'ruiz', 'repar', 'minisplit', 'xalap', 'funcion', 'maravill', 'emojiposit']
+  Lemas          : ['gracias', 'ing', 'carlo', 'ruiz', 'reparar', 'minisplit', 'xalapa', 'funcionar', 'maravilla', 'emojipositivo']
+  SENTIMIENTO    : positivo  {'negativo': 0.0167, 'neutral': 0.0194, 'positivo': 0.9638}
+  ENTIDADES      : [PERSONA] Ing. Carlos Ruiz; [DISPOSITIVO] minisplit; [LUGAR] Xalapa
+
+EJEMPLO 11
+  ENTRADA        : Solicito el duplicado del recibo de $1,250 correspondiente a 350 kWh del 15/03/2026.
+  Normalizado    : solicito el duplicado del recibo de correspondiente a del .
+  Tokens         : ['solicito', 'el', 'duplicado', 'del', 'recibo', 'de', 'correspondiente', 'a', 'del']
+  Sin stopwords  : ['solicito', 'duplicado', 'recibo', 'correspondiente']
+  Stems          : ['solicit', 'duplic', 'recib', 'correspondient']
+  Lemas          : ['solicitar', 'duplicado', 'recibo', 'correspondiente']
+  SENTIMIENTO    : neutral  {'negativo': 0.0116, 'neutral': 0.9698, 'positivo': 0.0185}
+  ENTIDADES      : [MONTO] $1,250; [ENERGIA] 350 kWh; [FECHA] 15/03/2026
+
+EJEMPLO 12
+  ENTRADA        : El servicio fue rápido, pero el aire acondicionado sigue sin enfriar en Boca del Río
+  Normalizado    : el servicio fue rápido, pero el aire acondicionado sigue sin enfriar en boca del río
+  Tokens         : ['el', 'servicio', 'fue', 'rápido', 'pero', 'el', 'aire', 'acondicionado', 'sigue', 'sin', 'enfriar', 'en', 'boca', 'del', 'río']
+  Sin stopwords  : ['servicio', 'rápido', 'pero', 'aire', 'acondicionado', 'sigue', 'sin', 'enfriar', 'boca', 'río']
+  Stems          : ['servic', 'rap', 'per', 'air', 'acondicion', 'sigu', 'sin', 'enfri', 'boc', 'rio']
+  Lemas          : ['servicio', 'rápido', 'pero', 'aire', 'acondicionado', 'seguir', 'sin', 'enfriar', 'boca', 'río']
+  SENTIMIENTO    : negativo  {'negativo': 0.5545, 'neutral': 0.0134, 'positivo': 0.4322}
+  ENTIDADES      : [DISPOSITIVO] aire acondicionado; [LUGAR] Boca del Río
+
+EJEMPLO 13
+  ENTRADA        : No tengo ninguna queja, el compresor opera sin fallas desde el mantenimiento
+  Normalizado    : no tengo ninguna queja, el compresor opera sin fallas desde el mantenimiento
+  Tokens         : ['no', 'tengo', 'ninguna', 'queja', 'el', 'compresor', 'opera', 'sin', 'fallas', 'desde', 'el', 'mantenimiento']
+  Sin stopwords  : ['no', 'ninguna', 'queja', 'compresor', 'opera', 'sin', 'fallas', 'mantenimiento']
+  Stems          : ['no', 'ninguna', 'quej', 'compresor', 'oper', 'sin', 'fall', 'manten']
+  Lemas          : ['no', 'ninguna', 'quejar', 'compresor', 'operar', 'sin', 'fallar', 'mantenimiento']
+  SENTIMIENTO    : positivo  {'negativo': 0.0973, 'neutral': 0.0038, 'positivo': 0.8989}
+  ENTIDADES      : [DISPOSITIVO] compresor
+

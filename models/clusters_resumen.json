@@ -1,0 +1,400 @@
+{
+  "k": 6,
+  "silhouette": 0.6623778206748044,
+  "k_codo": 4,
+  "regla_eleccion": "k >= 4; mayor k con silhouette a menos de 0.01 del máximo",
+  "inercias": {
+    "2": 1374.0408011036652,
+    "3": 704.1275752552932,
+    "4": 416.79921239066755,
+    "5": 239.21611084277163,
+    "6": 167.55977059908892,
+    "7": 151.14518182138812,
+    "8": 139.7297539730418
+  },
+  "silhouettes": {
+    "2": 0.5815610063119441,
+    "3": 0.6259013705594262,
+    "4": 0.6432090441240466,
+    "5": 0.6693154604882032,
+    "6": 0.6623778206748044,
+    "7": 0.5930136677562233,
+    "8": 0.4397139147127398
+  },
+  "centroides": {
+    "0": [
+      0.2503,
+      0.2494,
+      0.2501,
+      0.2491,
+      0.2501,
+      0.2518,
+      0.5023,
+      1.0007,
+      1.6189,
+      1.6432,
+      1.6552,
+      1.6731,
+      1.693,
+      1.6976,
+      1.3232,
+      1.5146,
+      1.5122,
+      1.5027,
+      1.2951,
+      1.2758,
+      1.2626,
+      0.7581,
+      0.3205,
+      0.2505
+    ],
+    "1": [
+      0.7046,
+      0.706,
+      0.7056,
+      0.7067,
+      0.7294,
+      0.8607,
+      1.1619,
+      1.1637,
+      1.1655,
+      1.1708,
+      1.1737,
+      1.18,
+      1.1828,
+      1.1868,
+      1.0931,
+      1.099,
+      1.0979,
+      1.0926,
+      1.0869,
+      1.0789,
+      1.0714,
+      1.065,
+      0.8122,
+      0.7052
+    ],
+    "2": [
+      0.309,
+      0.3083,
+      0.3082,
+      0.3087,
+      0.3088,
+      0.3085,
+      0.3107,
+      0.4368,
+      0.7474,
+      1.2502,
+      1.4129,
+      1.584,
+      1.7648,
+      1.813,
+      1.6357,
+      1.5713,
+      1.6323,
+      1.7457,
+      1.6988,
+      1.5117,
+      1.2763,
+      0.8829,
+      0.5015,
+      0.3724
+    ],
+    "3": [
+      0.5507,
+      0.4956,
+      0.4738,
+      0.4632,
+      0.4939,
+      0.6881,
+      1.1809,
+      1.3868,
+      1.0943,
+      0.8091,
+      0.7734,
+      0.7868,
+      0.8603,
+      0.9861,
+      0.9458,
+      0.8951,
+      0.9445,
+      1.0934,
+      1.2856,
+      1.7713,
+      1.9329,
+      1.8024,
+      1.393,
+      0.8929
+    ],
+    "4": [
+      0.5679,
+      0.4929,
+      0.4734,
+      0.4522,
+      0.451,
+      0.4755,
+      0.5706,
+      0.76,
+      1.05,
+      1.2456,
+      1.1782,
+      1.1062,
+      1.136,
+      1.164,
+      1.0753,
+      1.0799,
+      1.0815,
+      1.1688,
+      1.344,
+      1.6222,
+      1.764,
+      1.6383,
+      1.2402,
+      0.8624
+    ],
+    "5": [
+      0.9809,
+      0.9824,
+      0.9867,
+      0.9853,
+      0.9836,
+      0.9801,
+      0.9829,
+      0.9842,
+      0.9858,
+      0.9911,
+      1.0041,
+      1.0131,
+      1.0219,
+      1.0296,
+      1.0298,
+      1.0342,
+      1.0374,
+      1.0275,
+      1.015,
+      0.9989,
+      0.9884,
+      0.9861,
+      0.9868,
+      0.9842
+    ]
+  },
+  "descripciones": {
+    "0": "224 días; tipo dominante: educativa (100 %); hora pico: 13:00; con pico marcado",
+    "1": "350 días; tipo dominante: industrial (100 %); hora pico: 13:00; con pico marcado",
+    "2": "525 días; tipo dominante: comercial (100 %); hora pico: 13:00; con pico marcado",
+    "3": "358 días; tipo dominante: residencial (100 %); hora pico: 20:00; con pico marcado",
+    "4": "167 días; tipo dominante: residencial (100 %); hora pico: 20:00; con pico marcado",
+    "5": "126 días; tipo dominante: educativa (100 %); hora pico: 16:00; curva casi plana (sin pico marcado: operación continua o cerrado)"
+  },
+  "tamanos": {
+    "0": 224,
+    "1": 350,
+    "2": 525,
+    "3": 358,
+    "4": 167,
+    "5": 126
+  },
+  "distribucion_por_tipo": {
+    "0": {
+      "residencial": 0,
+      "comercial": 0,
+      "industrial": 0,
+      "educativa": 224
+    },
+    "1": {
+      "residencial": 0,
+      "comercial": 0,
+      "industrial": 350,
+      "educativa": 0
+    },
+    "2": {
+      "residencial": 0,
+      "comercial": 525,
+      "industrial": 0,
+      "educativa": 0
+    },
+    "3": {
+      "residencial": 358,
+      "comercial": 0,
+      "industrial": 0,
+      "educativa": 0
+    },
+    "4": {
+      "residencial": 167,
+      "comercial": 0,
+      "industrial": 0,
+      "educativa": 0
+    },
+    "5": {
+      "residencial": 0,
+      "comercial": 0,
+      "industrial": 0,
+      "educativa": 126
+    }
+  },
+  "dias_atipicos": [
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-06-16",
+      "cluster": 4,
+      "distancia": 0.9228,
+      "consumo_medio_kwh": 1.399
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-05-20",
+      "cluster": 4,
+      "distancia": 0.8983,
+      "consumo_medio_kwh": 1.873
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-06-14",
+      "cluster": 4,
+      "distancia": 0.7914,
+      "consumo_medio_kwh": 1.521
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-05-22",
+      "cluster": 3,
+      "distancia": 0.7101,
+      "consumo_medio_kwh": 1.732
+    },
+    {
+      "id_instalacion": "EDU-001",
+      "tipo": "educativa",
+      "fecha": "2026-03-19",
+      "cluster": 0,
+      "distancia": 0.6923,
+      "consumo_medio_kwh": 42.215
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-06-19",
+      "cluster": 3,
+      "distancia": 0.6351,
+      "consumo_medio_kwh": 1.049
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-05-05",
+      "cluster": 3,
+      "distancia": 0.6334,
+      "consumo_medio_kwh": 1.743
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-05-04",
+      "cluster": 3,
+      "distancia": 0.6263,
+      "consumo_medio_kwh": 1.538
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-05-28",
+      "cluster": 3,
+      "distancia": 0.6192,
+      "consumo_medio_kwh": 1.197
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-06-16",
+      "cluster": 3,
+      "distancia": 0.6075,
+      "consumo_medio_kwh": 1.703
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-06-18",
+      "cluster": 3,
+      "distancia": 0.6009,
+      "consumo_medio_kwh": 1.305
+    },
+    {
+      "id_instalacion": "COM-001",
+      "tipo": "comercial",
+      "fecha": "2026-01-15",
+      "cluster": 2,
+      "distancia": 0.6002,
+      "consumo_medio_kwh": 7.387
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-06-26",
+      "cluster": 3,
+      "distancia": 0.5828,
+      "consumo_medio_kwh": 1.749
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-02-25",
+      "cluster": 3,
+      "distancia": 0.573,
+      "consumo_medio_kwh": 1.064
+    },
+    {
+      "id_instalacion": "EDU-001",
+      "tipo": "educativa",
+      "fecha": "2026-05-22",
+      "cluster": 0,
+      "distancia": 0.569,
+      "consumo_medio_kwh": 46.522
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-06-07",
+      "cluster": 4,
+      "distancia": 0.564,
+      "consumo_medio_kwh": 1.269
+    },
+    {
+      "id_instalacion": "RES-003",
+      "tipo": "residencial",
+      "fecha": "2026-03-12",
+      "cluster": 3,
+      "distancia": 0.5497,
+      "consumo_medio_kwh": 0.609
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-06-13",
+      "cluster": 4,
+      "distancia": 0.5473,
+      "consumo_medio_kwh": 2.08
+    },
+    {
+      "id_instalacion": "RES-002",
+      "tipo": "residencial",
+      "fecha": "2026-05-07",
+      "cluster": 3,
+      "distancia": 0.5458,
+      "consumo_medio_kwh": 1.688
+    },
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-06-11",
+      "cluster": 3,
+      "distancia": 0.543,
+      "consumo_medio_kwh": 1.121
+    }
+  ],
+  "n_perfiles": 1750,
+  "fecha_entrenamiento": "2026-11-14 21:27:12"
+}

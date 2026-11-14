@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Informes{% endblock %}
+{% block contenido %}
+<h1>Informes automáticos</h1>
+<p class="lead">Cada informe resume datos, modelo, perfiles, predicciones y análisis de reportes de usuarios, redactado en español de forma automática. Al generarlo se registra su huella digital en la blockchain.</p>
+
+<section class="tarjeta">
+  {% if faltan %}
+    <p class="aviso-inline">Para generar informes faltan: {{ faltan|join(', ') }}. Ejecuta <code>python pipeline.py</code>.</p>
+  {% else %}
+  <form method="post" action="{{ url_for('reportes_generar') }}" id="form-generar">
+    <button class="boton" type="submit" id="btn-generar">Generar nuevo reporte</button>
+    <span class="nota">Tarda unos segundos (calcula el pronóstico de 24 h y mina el bloque).</span>
+  </form>
+  {% endif %}
+</section>
+
+<section class="tarjeta">
+  <h2>Informes disponibles ({{ reportes|length }})</h2>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Informe</th><th>Generado</th><th>Registros</th><th>R²</th><th>Integridad</th><th>Acciones</th></tr></thead>
+    <tbody>
+    {% for r in reportes %}
+      <tr><td><a href="{{ url_for('reporte_ver', nombre=r.nombre) }}">{{ r.nombre }}</a><br><span class="nota">{{ r.tam_kb }} KB</span></td>
+        <td>{{ r.fecha or '—' }}</td><td class="num">{{ r.n_registros|num }}</td><td class="num">{{ r.r2|num(3) }}</td>
+        <td>{% if r.ver.integro %}<span class="insignia ok">íntegro · bloque #{{ r.ver.bloque }}</span>{% elif r.ver.hash_registrado %}<span class="insignia mal">modificado</span>{% else %}<span class="insignia">sin registrar</span>{% endif %}</td>
+        <td class="nowrap"><a href="{{ url_for('reporte_ver', nombre=r.nombre) }}">Ver</a> ·
+          <a href="{{ url_for('reporte_descargar', nombre=r.nombre) }}">JSON</a>{% if r.txt %} · <a href="{{ url_for('reporte_descargar', nombre=r.txt) }}">TXT</a>{% endif %}</td></tr>
+    {% else %}<tr><td colspan="6">Todavía no hay informes. Pulsa "Generar nuevo reporte".</td></tr>{% endfor %}
+    </tbody></table></div>
+</section>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<section class="hero">
+  <h1>Análisis y predicción del consumo de energía eléctrica</h1>
+  <p>SIAPE vigila el consumo de 10 instalaciones de Veracruz (casas, comercios, industrias y escuelas), anticipa cuánta energía se usará, entiende las quejas de los usuarios y guarda una "huella digital" de cada resultado para que nadie pueda alterarlo sin que se note.</p>
+</section>
+
+{% if faltan %}
+<section class="tarjeta aviso">
+  <strong>Aún faltan archivos:</strong> {{ faltan|join(', ') }}. Ejecuta <code>python pipeline.py</code> en la terminal para generarlos.
+</section>
+{% endif %}
+
+<section class="kpis">
+  <div class="kpi"><span class="kpi-n">{{ kpi.registros|num }}</span><span class="kpi-t">registros horarios analizados</span></div>
+  <div class="kpi"><span class="kpi-n">{{ kpi.instalaciones|default('—') }}</span><span class="kpi-t">instalaciones monitoreadas</span></div>
+  <div class="kpi"><span class="kpi-n">{{ (kpi.consumo_total / 1000)|num(1) }} <small>MWh</small></span><span class="kpi-t">consumo total del periodo</span></div>
+  <div class="kpi"><span class="kpi-n">{{ kpi.r2|num(3) }}</span><span class="kpi-t">R² del modelo ({{ kpi.modelo|default('—') }}); 1 = ajuste perfecto</span></div>
+  <div class="kpi"><span class="kpi-n">{{ kpi.mae|num(2) }} <small>kWh</small></span><span class="kpi-t">error promedio de la predicción (MAE)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ (kpi.sentimiento or {}).get('negativo', 0)|pct(1) }}</span><span class="kpi-t">de {{ kpi.n_reportes|num }} reportes de usuarios son negativos</span></div>
+  <div class="kpi"><span class="kpi-n">{{ kpi.k|default('—') }}</span><span class="kpi-t">perfiles de consumo diario (silhouette {{ kpi.silhouette|num(2) }})</span></div>
+  <div class="kpi"><span class="kpi-n">{{ kpi.bloques }}</span><span class="kpi-t">bloques en la cadena de trazabilidad</span></div>
+</section>
+
+{% if kpi.por_tipo %}
+<section class="tarjeta">
+  <h2>¿Quién consume más?</h2>
+  <p class="nota">Periodo {{ kpi.periodo[0] }} a {{ kpi.periodo[1] }}. Porcentaje del consumo total por tipo de instalación.</p>
+  <div class="barras">
+    {% for tipo, v in kpi.por_tipo.items() %}
+    <div class="barra-fila"><span class="barra-etq">{{ tipo|capitalize }}</span>
+      <span class="barra-pista"><span class="barra-rel" style="width: {{ (100 * v / kpi.consumo_total)|round(1) }}%"></span></span>
+      <span class="barra-val">{{ (100 * v / kpi.consumo_total)|num(1) }} %</span></div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="tarjeta">
+  <h2>¿Cómo funciona el sistema?</h2>
+  <p class="nota">Cada paso alimenta al siguiente. Pulsa sobre un paso para ver su sección.</p>
+  <div class="flujo">
+    <a class="paso" href="{{ url_for('datos') }}"><b>1. Datos</b><span>Lecturas horarias de consumo, temperatura y humedad. Se limpian y se preparan.</span></a>
+    <span class="flecha">➜</span>
+    <div class="paso-doble">
+      <a class="paso" href="{{ url_for('modelo') }}"><b>2a. Predicción</b><span>Un modelo aprende del pasado y estima el consumo de la siguiente hora.</span></a>
+      <a class="paso" href="{{ url_for('clusters') }}"><b>2b. Perfiles</b><span>Agrupa los días con comportamiento parecido y señala los raros.</span></a>
+      <a class="paso" href="{{ url_for('pnl') }}"><b>2c. Lenguaje natural</b><span>Lee las quejas y comentarios: sentimiento y datos clave (equipos, lugares, folios).</span></a>
+    </div>
+    <span class="flecha">➜</span>
+    <a class="paso" href="{{ url_for('reportes') }}"><b>3. Informe</b><span>Se redacta automáticamente un informe en español con los resultados.</span></a>
+    <span class="flecha">➜</span>
+    <a class="paso destacado" href="{{ url_for('blockchain') }}"><b>4. Blockchain</b><span>Se guarda la huella digital (SHA-256) del informe y de las predicciones. Si algo cambia, se detecta.</span></a>
+  </div>
+</section>
+
+<section class="dos-col">
+  <div class="tarjeta"><h2>Pruébalo</h2>
+    <ul class="lista">
+      <li><a href="{{ url_for('prediccion') }}">Predecir el consumo</a> de una instalación en una fecha y hora.</li>
+      <li><a href="{{ url_for('pnl') }}">Analizar un texto</a> de un usuario: sentimiento y entidades.</li>
+      <li><a href="{{ url_for('reportes') }}">Generar un informe</a> y registrarlo en la blockchain.</li>
+      <li><a href="{{ url_for('blockchain') }}">Verificar un archivo</a> para comprobar que no fue modificado.</li>
+    </ul></div>
+  <div class="tarjeta"><h2>Importante</h2>
+    <p>Los datos de este proyecto son <strong>simulados</strong> con fines académicos (no son lecturas reales de CFE). Las predicciones son una ayuda para decidir, no un valor oficial.</p></div>
+</section>
+{% endblock %}

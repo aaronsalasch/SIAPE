@@ -1,0 +1,105 @@
+{
+  "fecha_ejecucion": "2026-11-14 21:25:32",
+  "filas_raw": 44117,
+  "duplicados_eliminados": 437,
+  "atipicos": {
+    "temperatura_fuera_de_rango": 74,
+    "humedad_fuera_de_rango": 0,
+    "consumo_negativo": 72,
+    "consumo_pico_iqr": 111,
+    "total_detectados": 257
+  },
+  "nulos_antes": {
+    "temperatura_c": 885,
+    "humedad_pct": 881,
+    "consumo_kwh": 881
+  },
+  "nulos_despues": {
+    "id_registro": 0,
+    "id_instalacion": 0,
+    "tipo_instalacion": 0,
+    "ciudad": 0,
+    "fecha_hora": 0,
+    "dia_semana": 0,
+    "es_festivo": 0,
+    "temperatura_c": 0,
+    "humedad_pct": 0,
+    "superficie_m2": 0,
+    "num_ocupantes": 0,
+    "consumo_kwh": 0
+  },
+  "estrategia_nulos": "interpolación temporal lineal por instalación",
+  "filas_procesadas": 42000,
+  "columnas_procesadas": 27,
+  "filas_descartadas_sin_historia": 1680,
+  "transformaciones": [
+    "strip+minúsculas en texto",
+    "día de la semana recalculado desde la fecha",
+    "eliminación de duplicados",
+    "atípicos -> NaN (reglas físicas + IQR)",
+    "interpolación temporal por instalación",
+    "variables de calendario y cíclicas",
+    "lags 1/24/168 h y media móvil 24 h (solo pasado)",
+    "división temporal"
+  ],
+  "variables_creadas": [
+    "hora",
+    "dia_semana_num",
+    "mes",
+    "dia_anio",
+    "es_fin_semana",
+    "hora_sin",
+    "hora_cos",
+    "mes_sin",
+    "mes_cos",
+    "temp_x_hora_pico",
+    "consumo_lag_1h",
+    "consumo_lag_24h",
+    "consumo_lag_168h",
+    "consumo_media_movil_24h"
+  ],
+  "division": {
+    "corte": "2026-05-26 14:00:00",
+    "fraccion_test": 0.2,
+    "n_entrenamiento": 33260,
+    "n_prueba": 8740
+  },
+  "correlacion_con_consumo_relativo": {
+    "hora_cos": -0.4632,
+    "hora": 0.4012,
+    "temperatura_c": 0.3848,
+    "humedad_pct": -0.3759,
+    "hora_sin": -0.3754,
+    "consumo_lag_1h": 0.3247,
+    "consumo_lag_168h": 0.2792,
+    "temp_x_hora_pico": 0.2626,
+    "consumo_lag_24h": 0.2195,
+    "es_fin_semana": -0.1742,
+    "dia_semana_num": -0.1425,
+    "consumo_media_movil_24h": 0.0892,
+    "es_festivo": -0.0754,
+    "dia_anio": 0.0352,
+    "mes": 0.0255,
+    "mes_cos": -0.024,
+    "mes_sin": -0.0157,
+    "superficie_m2": 0.0,
+    "num_ocupantes": -0.0
+  },
+  "pares_muy_correlacionados": [
+    [
+      "mes",
+      "dia_anio",
+      0.979
+    ],
+    [
+      "mes",
+      "mes_cos",
+      0.998
+    ],
+    [
+      "dia_anio",
+      "mes_cos",
+      0.978
+    ]
+  ]
+}

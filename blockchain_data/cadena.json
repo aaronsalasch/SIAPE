@@ -1,0 +1,84 @@
+{
+  "dificultad": 4,
+  "bloques": [
+    {
+      "indice": 0,
+      "marca_tiempo": "2026-11-14T21:27:21+00:00",
+      "datos": {
+        "tipo": "genesis",
+        "nombre": "Bloque génesis SIAPE",
+        "hash_documento": "0000000000000000000000000000000000000000000000000000000000000000",
+        "metadatos": {
+          "descripcion": "Inicio de la cadena de trazabilidad energética SIAPE"
+        }
+      },
+      "hash_anterior": "0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce": 19229,
+      "hash": "00002d9a76f11d689dfb2a52d2641f21f367752a26e4cfd18bbad574a03a1386"
+    },
+    {
+      "indice": 1,
+      "marca_tiempo": "2026-11-14T21:27:21+00:00",
+      "datos": {
+        "tipo": "dataset",
+        "nombre": "consumo_energetico_procesado.csv",
+        "hash_documento": "7e73e58e56171e33449a7f3786ecc42a31097e11d6bbc546a97feedc89864544",
+        "metadatos": {
+          "tamano_bytes": 9607463
+        }
+      },
+      "hash_anterior": "00002d9a76f11d689dfb2a52d2641f21f367752a26e4cfd18bbad574a03a1386",
+      "nonce": 28389,
+      "hash": "000047e7556c7160413f61aa1d82ab4dd438f901b9718a42dff4d35b2a76e1b5"
+    },
+    {
+      "indice": 2,
+      "marca_tiempo": "2026-11-14T21:27:21+00:00",
+      "datos": {
+        "tipo": "modelo",
+        "nombre": "modelo_consumo.joblib",
+        "hash_documento": "e417161bc81aecc4a403837254fb18bae7b56200fa1c7541a79edf8595dbc0d2",
+        "metadatos": {
+          "tamano_bytes": 20539072
+        }
+      },
+      "hash_anterior": "000047e7556c7160413f61aa1d82ab4dd438f901b9718a42dff4d35b2a76e1b5",
+      "nonce": 173862,
+      "hash": "00002b6449baa4424461739f43e4b3c1835c5da7a8daaf24d0a11d3a44e71f5a"
+    },
+    {
+      "indice": 3,
+      "marca_tiempo": "2026-11-14T21:27:22+00:00",
+      "datos": {
+        "tipo": "metricas",
+        "nombre": "metricas_modelos.json",
+        "hash_documento": "d6c1cb91d0881e8704f99eaccd85cac454044b43118cf6be46e3ca30caf9e56e",
+        "metadatos": {
+          "tamano_bytes": 4370
+        }
+      },
+      "hash_anterior": "00002b6449baa4424461739f43e4b3c1835c5da7a8daaf24d0a11d3a44e71f5a",
+      "nonce": 11921,
+      "hash": "0000c6b3c86b53c8f8f95e51799940d813f48102de9be5fed777772fc31a87b7"
+    },
+    {
+      "indice": 4,
+      "marca_tiempo": "2026-11-14T21:27:26+00:00",
+      "datos": {
+        "tipo": "reporte",
+        "nombre": "reporte_20261114_212726.json",
+        "hash_documento": "6cbfa9ba31a5c1df0a88e43291a719a91c6eb1389bae536ec685e86938c4cc6b",
+        "metadatos": {
+          "tamano_bytes": 16330,
+          "modelo": "Random Forest",
+          "r2": 0.9948,
+          "n_registros": 42000,
+          "archivo_txt": "reporte_20261114_212726.txt"
+        }
+      },
+      "hash_anterior": "0000c6b3c86b53c8f8f95e51799940d813f48102de9be5fed777772fc31a87b7",
+      "nonce": 63657,
+      "hash": "00005b31c151271cb5bfcc9dc835a36982b2926b61b8b6556337d381309579be"
+    }
+  ]
+}

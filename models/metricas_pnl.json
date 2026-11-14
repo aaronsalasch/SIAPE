@@ -1,0 +1,295 @@
+{
+  "seleccionado": "SVM lineal",
+  "modelos": {
+    "Naive Bayes multinomial": {
+      "accuracy": 0.9337,
+      "f1_macro": 0.935,
+      "precision_macro": 0.9357,
+      "recall_macro": 0.9344,
+      "f1_macro_cv": 0.9289
+    },
+    "Regresión Logística": {
+      "accuracy": 0.9275,
+      "f1_macro": 0.9294,
+      "precision_macro": 0.9305,
+      "recall_macro": 0.9284,
+      "f1_macro_cv": 0.9294
+    },
+    "SVM lineal": {
+      "accuracy": 0.9363,
+      "f1_macro": 0.9377,
+      "precision_macro": 0.9384,
+      "recall_macro": 0.937,
+      "f1_macro_cv": 0.9311
+    }
+  },
+  "reporte_clasificacion": {
+    "negativo": {
+      "precision": 0.9344262295081968,
+      "recall": 0.9313725490196079,
+      "f1-score": 0.9328968903436988,
+      "support": 306.0
+    },
+    "neutral": {
+      "precision": 0.9681818181818181,
+      "recall": 0.9466666666666667,
+      "f1-score": 0.9573033707865168,
+      "support": 225.0
+    },
+    "positivo": {
+      "precision": 0.9127272727272727,
+      "recall": 0.9330855018587361,
+      "f1-score": 0.9227941176470589,
+      "support": 269.0
+    },
+    "accuracy": 0.93625,
+    "macro avg": {
+      "precision": 0.9384451068057625,
+      "recall": 0.9370415725150035,
+      "f1-score": 0.9376647929257582,
+      "support": 800.0
+    },
+    "weighted avg": {
+      "precision": 0.9366237146050671,
+      "recall": 0.93625,
+      "f1-score": 0.9363641556489963,
+      "support": 800.0
+    }
+  },
+  "matriz_confusion": {
+    "clases": [
+      "negativo",
+      "neutral",
+      "positivo"
+    ],
+    "valores": [
+      [
+        285,
+        3,
+        18
+      ],
+      [
+        6,
+        213,
+        6
+      ],
+      [
+        14,
+        4,
+        251
+      ]
+    ]
+  },
+  "n_entrenamiento": 3200,
+  "n_prueba": 800,
+  "terminos_top_por_clase": {
+    "negativo": [
+      {
+        "termino": "no",
+        "peso": 5.221
+      },
+      {
+        "termino": "emojinegat",
+        "peso": 3.378
+      },
+      {
+        "termino": "no qued",
+        "peso": 2.767
+      },
+      {
+        "termino": "nadie",
+        "peso": 2.56
+      },
+      {
+        "termino": "rat",
+        "peso": 2.509
+      },
+      {
+        "termino": "lleg",
+        "peso": 2.357
+      },
+      {
+        "termino": "mal",
+        "peso": 2.317
+      },
+      {
+        "termino": "respuest",
+        "peso": 2.258
+      },
+      {
+        "termino": "apagon",
+        "peso": 2.237
+      },
+      {
+        "termino": "lentitud",
+        "peso": 2.202
+      },
+      {
+        "termino": "exij",
+        "peso": 2.098
+      },
+      {
+        "termino": "quem",
+        "peso": 2.098
+      }
+    ],
+    "neutral": [
+      {
+        "termino": "requier",
+        "peso": 4.309
+      },
+      {
+        "termino": "inform",
+        "peso": 4.032
+      },
+      {
+        "termino": "program",
+        "peso": 3.654
+      },
+      {
+        "termino": "solicit",
+        "peso": 3.634
+      },
+      {
+        "termino": "are",
+        "peso": 3.111
+      },
+      {
+        "termino": "pregunt",
+        "peso": 3.022
+      },
+      {
+        "termino": "env",
+        "peso": 2.927
+      },
+      {
+        "termino": "consum registr",
+        "peso": 2.833
+      },
+      {
+        "termino": "revision",
+        "peso": 2.722
+      },
+      {
+        "termino": "horar",
+        "peso": 2.606
+      },
+      {
+        "termino": "avi",
+        "peso": 2.532
+      },
+      {
+        "termino": "estatu",
+        "peso": 2.465
+      }
+    ],
+    "positivo": [
+      {
+        "termino": "excelent",
+        "peso": 3.769
+      },
+      {
+        "termino": "muy",
+        "peso": 3.378
+      },
+      {
+        "termino": "funcion",
+        "peso": 3.045
+      },
+      {
+        "termino": "gran",
+        "peso": 2.823
+      },
+      {
+        "termino": "much",
+        "peso": 2.643
+      },
+      {
+        "termino": "grac",
+        "peso": 2.619
+      },
+      {
+        "termino": "felicit",
+        "peso": 2.597
+      },
+      {
+        "termino": "qued",
+        "peso": 2.431
+      },
+      {
+        "termino": "period sol",
+        "peso": 2.418
+      },
+      {
+        "termino": "maravill",
+        "peso": 2.386
+      },
+      {
+        "termino": "sin cort",
+        "peso": 2.386
+      },
+      {
+        "termino": "agradec",
+        "peso": 2.239
+      }
+    ]
+  },
+  "fecha_entrenamiento": "2026-11-14T21:27:17",
+  "ner": {
+    "DISPOSITIVO": {
+      "precision": 1.0,
+      "recall": 0.995,
+      "f1": 0.9975
+    },
+    "LUGAR": {
+      "precision": 1.0,
+      "recall": 0.9919,
+      "f1": 0.9959
+    },
+    "ORGANIZACION": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "FECHA": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "HORA": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "CODIGO_INSTALACION": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "FOLIO": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "MONTO": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "ENERGIA": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "PERSONA": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "ner_global": {
+    "precision": 1.0,
+    "recall": 0.9979,
+    "f1": 0.9989
+  }
+}

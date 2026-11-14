@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block titulo %}Perfiles{% endblock %}
+{% block contenido %}
+<h1>Perfiles de consumo (clustering K-Means)</h1>
+<p class="lead">Aprendizaje no supervisado: el sistema agrupa los días según la forma de su curva de consumo en 24 horas, sin que nadie le diga los grupos. Así se detectan comportamientos parecidos y días raros.</p>
+
+<section class="kpis">
+  <div class="kpi"><span class="kpi-n">{{ c.k }}</span><span class="kpi-t">grupos (k) elegidos</span></div>
+  <div class="kpi"><span class="kpi-n">{{ c.silhouette|num(3) }}</span><span class="kpi-t">silhouette (de -1 a 1; más alto = grupos mejor separados)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ c.n_perfiles|num }}</span><span class="kpi-t">días-instalación agrupados</span></div>
+</section>
+<p class="nota">Regla de elección: {{ c.regla_eleccion }}. El método del codo sugería k = {{ c.k_codo }}.</p>
+
+<section class="tarjeta">
+  <h2>Los grupos</h2>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Grupo</th><th>Días</th><th>Residencial</th><th>Comercial</th><th>Industrial</th><th>Educativa</th><th>Descripción</th></tr></thead>
+    <tbody>
+    {% for g, desc in c.descripciones.items() %}
+      {% set d = c.distribucion_por_tipo[g] %}
+      <tr><td><span class="insignia">Grupo {{ g }}</span></td><td class="num">{{ c.tamanos[g]|num }}</td>
+        <td class="num">{{ d.residencial }}</td><td class="num">{{ d.comercial }}</td><td class="num">{{ d.industrial }}</td><td class="num">{{ d.educativa }}</td><td>{{ desc }}</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</section>
+
+<section class="dos-col">
+  <div class="tarjeta">
+    <h2>Perfil horario de cada grupo</h2>
+    {% set paleta = ['#2a9d8f','#e76f51','#457b9d','#e9c46a','#8d6cab','#6a994e','#bc4749','#264653'] %}
+    {% set cfg = {'type':'line','data':{'labels': range(24)|list,'datasets':[]},'options':{'responsive':True,'maintainAspectRatio':False,'elements':{'point':{'radius':0}},'scales':{'x':{'title':{'display':True,'text':'Hora del día'}},'y':{'title':{'display':True,'text':'Consumo relativo al promedio del día'}}}}} %}
+    {% for g, v in c.centroides.items() %}{% set _ = cfg.data.datasets.append({'label':'Grupo '~g,'data':v,'borderColor':paleta[loop.index0 % 8],'borderWidth':2,'tension':0.3}) %}{% endfor %}
+    <div class="grafica" data-chart='{{ cfg|tojson }}' data-fallback="{{ url_for('figura', nombre='kmeans_centroides.png') }}"></div>
+    <p class="nota">Un valor de 1 es el consumo promedio de ese día; por encima, la hora consume más que el promedio.</p>
+  </div>
+  <div class="tarjeta">
+    <h2>¿Cuántos grupos? Silhouette por k</h2>
+    {% set cfg = {'type':'bar','data':{'labels': ks,'datasets':[{'label':'Silhouette','data': sil,'backgroundColor':'#457b9d'}]},'options':{'responsive':True,'maintainAspectRatio':False}} %}
+    <div class="grafica" data-chart='{{ cfg|tojson }}' data-fallback="{{ url_for('figura', nombre='kmeans_codo_silhouette.png') }}"></div>
+  </div>
+</section>
+
+<section class="tarjeta">
+  <h2>Días atípicos (los más alejados de su grupo)</h2>
+  <p class="nota">Son días en los que la curva de consumo se parece poco a la de su grupo: conviene revisar si hubo una falla, un evento especial o un uso anormal.</p>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Instalación</th><th>Tipo</th><th>Fecha</th><th>Grupo</th><th>Distancia al centro</th><th>Consumo medio (kWh/h)</th></tr></thead>
+    <tbody>{% for a in c.dias_atipicos %}<tr><td>{{ a.id_instalacion }}</td><td>{{ a.tipo|capitalize }}</td><td>{{ a.fecha }}</td><td>{{ a.cluster }}</td><td class="num">{{ a.distancia|num(2) }}</td><td class="num">{{ a.consumo_medio_kwh|num(2) }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</section>
+<section class="tarjeta"><h2>Gráficas</h2><div class="galeria">
+  {% for f in figs %}<figure><img loading="lazy" src="{{ url_for('figura', nombre=f.archivo) }}" alt="{{ f.titulo }}"><figcaption>{{ f.titulo }}</figcaption></figure>{% endfor %}</div></section>
+{% endblock %}

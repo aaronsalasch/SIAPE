@@ -1,0 +1,79 @@
+EVIDENCIA - PREPARACIÓN DE DATOS DE CONSUMO (SIAPE)
+Fecha de ejecución: 2026-11-14 21:25:32
+Entrada: /home/claude/ICD/data/raw/consumo_energetico_raw.csv  (44117 filas, 12 columnas)
+
+1) NULOS ANTES DE LA LIMPIEZA (por columna)
+   temperatura_c        885  (2.01 %)
+   humedad_pct          881  (2.00 %)
+   consumo_kwh          881  (2.00 %)
+
+2) NORMALIZACIÓN DE TEXTO
+   tipo_instalacion: 24 variantes distintas -> 4 (strip + minúsculas); 0 inconsistencias con el catálogo tras limpiar
+   dia_semana: 21 variantes distintas -> 7 (strip + minúsculas); 0 discrepancias con la fecha tras limpiar
+
+3) DUPLICADOS
+   Filas idénticas eliminadas: 437; llave (instalación, hora) repetida: 0
+   Filas: 44117 -> 43680
+   Horas faltantes respecto al calendario esperado: 0
+
+4) ATÍPICOS (reglas físicas + IQR por instalación/hora)
+   Regla física temperatura fuera de [-5.0, 50.0] °C: 74
+   Regla física humedad fuera de [0, 100] %: 0
+   Regla física consumo negativo: 72
+   Regla IQR (valor > Q3 + 3*IQR) por instalación/hora/tipo de día: 111 picos extremos de consumo
+   Tratamiento: se marcan como nulos (NaN) y se imputan en el paso 5. Total: 257 valores.
+
+5) IMPUTACIÓN (interpolación lineal en el tiempo, por instalación)
+   Estrategia: la serie es horaria y suave, por lo que se interpola entre la hora válida
+   anterior y la siguiente de la MISMA instalación. Nulos a imputar (originales + atípicos):
+   temperatura_c        948
+   humedad_pct          874
+   consumo_kwh         1057
+   Nulos DESPUÉS de imputar:
+   temperatura_c          0
+   humedad_pct            0
+   consumo_kwh            0
+
+6) INGENIERÍA DE CARACTERÍSTICAS (variables creadas)
+   Calendario: hora, dia_semana_num (0=lunes), mes, dia_anio, es_fin_semana
+   Cíclicas: hora_sin/hora_cos (periodo 24), mes_sin/mes_cos (periodo 12)
+   Interacción: temp_x_hora_pico = temperatura_c * (hora entre 18 y 21)
+   Históricas (solo valores pasados): consumo_lag_1h, consumo_lag_24h, consumo_lag_168h,
+   consumo_media_movil_24h (media de las 24 h previas, sin incluir la actual)
+   Filas descartadas por no tener 168 h de historia (primera semana de cada instalación): 1680
+
+7) DIVISIÓN TEMPORAL
+   Corte: 2026-05-26 14:00:00  (último 20% del periodo = prueba)
+   entrenamiento: 33260 filas (hasta 2026-05-26 13:00:00)
+   prueba: 8740 filas (desde 2026-05-26 14:00:00)
+   Garantía anti-fuga: todos los lags usan solo horas anteriores; el escalado/codificación
+   se ajustan dentro del Pipeline solo con entrenamiento.
+
+8) SELECCIÓN DE CARACTERÍSTICAS (correlación de Pearson con el consumo relativo, entrenamiento)
+   hora_cos                    -0.463
+   hora                         0.401
+   temperatura_c                0.385
+   humedad_pct                 -0.376
+   hora_sin                    -0.375
+   consumo_lag_1h               0.325
+   consumo_lag_168h             0.279
+   temp_x_hora_pico             0.263
+   consumo_lag_24h              0.219
+   es_fin_semana               -0.174
+   dia_semana_num              -0.143
+   consumo_media_movil_24h      0.089
+   es_festivo                  -0.075
+   dia_anio                     0.035
+   mes                          0.025
+   mes_cos                     -0.024
+   mes_sin                     -0.016
+   superficie_m2                0.000
+   num_ocupantes               -0.000
+   Pares muy correlacionados (|r| > 0.95): mes~dia_anio (0.98), mes~mes_cos (1.00), dia_anio~mes_cos (0.98)
+   Decisión: se conservan todas (los modelos de árboles toleran redundancia; la
+   importancia de variables del Random Forest se reporta en entrenamiento_modelo.txt).
+   Categóricas (tipo_instalacion, ciudad) se codifican con OneHotEncoder dentro del Pipeline.
+   Escalado: StandardScaler dentro del Pipeline (numéricas), ajustado solo con entrenamiento.
+
+Salida: /home/claude/ICD/data/processed/consumo_energetico_procesado.csv  (42000 filas, 27 columnas)
+Nulos totales en el procesado: 0

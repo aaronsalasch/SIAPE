@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block titulo %}Modelo ML{% endblock %}
+{% block contenido %}
+{% set ms = met.modelos[sel] %}
+<h1>Modelo de predicción de consumo</h1>
+<p class="lead">Se probaron varios modelos de aprendizaje supervisado (regresión) para estimar los kWh de la siguiente hora. Se eligió el que menos se equivoca al validarlo con datos de distintas épocas.</p>
+
+<section class="tarjeta destacada">
+  <h2>Modelo seleccionado: {{ sel }}</h2>
+  <div class="kpis chicos">
+    <div class="kpi"><span class="kpi-n">{{ ms.r2|num(3) }}</span><span class="kpi-t">R² (1 = perfecto)</span></div>
+    <div class="kpi"><span class="kpi-n">{{ ms.mae|num(2) }}</span><span class="kpi-t">MAE: error promedio (kWh)</span></div>
+    <div class="kpi"><span class="kpi-n">{{ ms.rmse|num(2) }}</span><span class="kpi-t">RMSE: error que penaliza los fallos grandes (kWh)</span></div>
+    <div class="kpi"><span class="kpi-n">{{ ms.mape|num(1) }} %</span><span class="kpi-t">MAPE: error porcentual</span></div>
+  </div>
+  <p class="nota">Criterio de selección: {{ met.criterio_seleccion }}. Entrenado con {{ met.n_entrenamiento|num }} registros y evaluado con {{ met.n_prueba|num }} registros posteriores en el tiempo.</p>
+</section>
+
+<section class="tarjeta">
+  <h2>Comparación de modelos</h2>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Modelo</th><th>MAE (kWh)</th><th>RMSE (kWh)</th><th>R²</th><th>MAPE %</th><th>RMSE validación cruzada</th></tr></thead>
+    <tbody>
+    {% for nombre, m in orden %}
+      <tr class="{{ 'fila-sel' if nombre == sel }}"><td>{{ nombre }}{% if nombre == sel %} <span class="insignia ok">elegido</span>{% endif %}{% if 'base' in nombre %} <span class="insignia">referencia</span>{% endif %}</td>
+        <td class="num">{{ m.mae|num(2) }}</td><td class="num">{{ m.rmse|num(2) }}</td><td class="num">{{ m.r2|num(3) }}</td>
+        <td class="num">{{ m.mape|num(1) }}</td><td class="num">{{ m.rmse_cv|num(2) if m.rmse_cv is not none else '—' }}</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+  <p class="nota">La "línea base (hace 24 h)" simplemente repite el consumo de ayer a la misma hora; sirve para comprobar que el modelo aporta algo real.</p>
+  {% set cfg = {'type':'bar','data':{'labels': orden|map(attribute=0)|list,'datasets':[{'label':'RMSE (kWh), menor es mejor','data': orden|map(attribute=1)|map(attribute='rmse')|map('round',2)|list,'backgroundColor':'#457b9d'}]},'options':{'responsive':True,'maintainAspectRatio':False,'plugins':{'legend':{'display':True}}}} %}
+  <div class="grafica" data-chart='{{ cfg|tojson }}' data-fallback="{{ url_for('figura', nombre='comparacion_modelos.png') }}"></div>
+</section>
+
+<section class="dos-col">
+  <div class="tarjeta">
+    <h2>Hiperparámetros</h2>
+    <table class="tabla"><tbody>{% for k, v in met.hiperparametros.items() %}<tr><td>{{ k }}</td><td class="num">{{ v }}</td></tr>{% endfor %}</tbody></table>
+    <p class="nota">Son los "ajustes" del bosque aleatorio (nº de árboles, profundidad máxima, etc.), elegidos con una búsqueda ligera y validación cruzada temporal.</p>
+  </div>
+  <div class="tarjeta">
+    <h2>Error por tipo de instalación</h2>
+    <table class="tabla"><thead><tr><th>Tipo</th><th>MAE</th><th>RMSE</th><th>R²</th><th>MAPE %</th></tr></thead><tbody>
+    {% for t, m in met.metricas_por_tipo.items() %}<tr><td>{{ t|capitalize }}</td><td class="num">{{ m.mae|num(2) }}</td><td class="num">{{ m.rmse|num(2) }}</td><td class="num">{{ m.r2|num(3) }}</td><td class="num">{{ m.mape|num(1) }}</td></tr>{% endfor %}
+    </tbody></table>
+    <p class="nota">Los errores en kWh son mayores en la industria porque su consumo también lo es; el MAPE permite compararlos en porcentaje.</p>
+  </div>
+</section>
+
+<section class="tarjeta">
+  <h2>¿En qué se fija el modelo? (importancia de variables)</h2>
+  {% if imp_lag and imp_lag > 0.5 %}
+  <p class="aviso-inline"><strong>Ojo:</strong> {{ (imp_lag * 100)|num(0) }} % de la importancia la tiene <code>consumo_lag_1h</code>, es decir, el consumo de la hora anterior. El modelo depende sobre todo de "lo que pasó hace una hora": funciona muy bien para pronósticos de corto plazo, pero para una fecha lejana debe apoyarse en estimaciones y será menos preciso. La hora, la temperatura y el tipo de instalación aportan ajustes finos.</p>
+  {% endif %}
+  {% set cfg = {'type':'bar','data':{'labels': imp|map(attribute=0)|list,'datasets':[{'label':'Importancia','data': imp|map(attribute=1)|map('round',4)|list,'backgroundColor':'#2a9d8f'}]},'options':{'indexAxis':'y','responsive':True,'maintainAspectRatio':False}} %}
+  <div class="grafica alta" data-chart='{{ cfg|tojson }}' data-fallback="{{ url_for('figura', nombre='importancia_variables.png') }}"></div>
+</section>
+
+<section class="tarjeta">
+  <h2>Rango de predicción</h2>
+  <p>Junto a cada predicción se muestra un <strong>rango de los árboles</strong>: va del percentil 5 al 95 de lo que opinan los {{ met.hiperparametros.n_estimators }} árboles del bosque. <strong>No es un intervalo de confianza del 90 %</strong>: en la prueba, el valor real cayó dentro del rango el {{ met.cobertura_intervalo_90|pct(1) }} de las veces, así que conviene leerlo como una guía de la incertidumbre.</p>
+</section>
+
+<section class="tarjeta">
+  <h2>Gráficas del entrenamiento</h2>
+  <div class="galeria">
+    {% for f in figs %}<figure><img loading="lazy" src="{{ url_for('figura', nombre=f.archivo) }}" alt="{{ f.titulo }}"><figcaption>{{ f.titulo }}</figcaption></figure>{% endfor %}
+  </div>
+</section>
+{% endblock %}

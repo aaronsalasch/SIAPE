@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}SIAPE{% endblock %} · SIAPE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+<header class="barra">
+  <div class="barra-in">
+    <a class="marca" href="{{ url_for('inicio') }}"><span class="marca-logo">⚡</span> SIAPE</a>
+    <button class="menu-btn" aria-label="Abrir menú" onclick="document.body.classList.toggle('menu-abierto')">☰</button>
+    <nav class="menu">
+      {% set enlaces = [('inicio','Inicio'),('datos','Datos'),('modelo','Modelo ML'),('clusters','Perfiles'),('prediccion','Predicción'),('pnl','Reportes de usuarios (PNL)'),('blockchain','Blockchain'),('reportes','Informes')] %}
+      {% for ep, texto in enlaces %}
+      <a href="{{ url_for(ep) }}" class="{{ 'activo' if pagina_activa == ep or (ep == 'reportes' and pagina_activa in ('reporte_ver',)) }}">{{ texto }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+</header>
+<main class="contenedor">
+  {% block contenido %}{% endblock %}
+</main>
+<footer class="pie">
+  SIAPE · Sistema Inteligente de Análisis, Predicción y trazabilidad Energética · Proyecto de IA en la ciencia de datos, ITV (TecNM) · {{ anio }}
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" onerror="window.sinChartJs = true"></script>
+<script src="{{ url_for('static', filename='siape.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

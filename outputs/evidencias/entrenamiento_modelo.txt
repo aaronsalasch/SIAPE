@@ -1,0 +1,64 @@
+EVIDENCIA - ENTRENAMIENTO DE MODELOS DE CONSUMO (SIAPE)
+Fecha de ejecución: 2026-11-14 21:25:35  |  Semilla: 42
+Entrenamiento: 33260 filas (2026-01-08 00:00:00 a 2026-05-26 13:00:00)
+Prueba: 8740 filas (2026-05-26 14:00:00 a 2026-07-01 23:00:00)
+Características (21): hora, dia_semana_num, mes, dia_anio, es_fin_semana, es_festivo, hora_sin, hora_cos, mes_sin, mes_cos, temperatura_c, humedad_pct, temp_x_hora_pico, superficie_m2, num_ocupantes, consumo_lag_1h, consumo_lag_24h, consumo_lag_168h, consumo_media_movil_24h, tipo_instalacion, ciudad
+Validación cruzada: TimeSeriesSplit(3 cortes, ventana creciente); métrica rmse_cv = RMSE promedio
+
+Modelo                        MAE     RMSE       R2   MAPE %   rmse_cv   fit s  búsq. s
+Regresión Lineal            2.519    4.434   0.9835    53.72     4.465     0.0      0.2
+Árbol de Decisión           1.498    2.948   0.9927     8.78     3.024     0.3      2.8
+KNN                         2.039    3.945   0.9869    13.26     5.515     0.0      3.0
+Random Forest               1.220    2.493   0.9948     6.29     2.497    18.8     62.9
+SVR (muestra)               8.034   10.717   0.9034   338.53    12.422     1.9      1.9
+Línea base (hace 24 h)      6.170   14.572   0.8213    28.68         -     0.0      0.0
+
+Hiperparámetros elegidos por búsqueda (GridSearchCV + TimeSeriesSplit):
+  Regresión Lineal: (sin búsqueda; valores por defecto)
+  Árbol de Decisión: {'max_depth': 10, 'min_samples_leaf': 5}
+  KNN: {'n_neighbors': 5, 'weights': 'distance'}
+  Random Forest: {'max_depth': 14, 'max_features': 1.0, 'min_samples_leaf': 3}
+  SVR (muestra): (sin búsqueda; valores por defecto)
+  Random Forest final: n_estimators=180 (búsqueda con 60)
+  SVR se entrena con una muestra sistemática de 4000 filas; los demás con las 33260.
+
+MODELO SELECCIONADO: Random Forest (menor rmse_cv).
+Mejor RMSE en prueba entre los modelos de ML: Random Forest.
+
+Métricas por tipo de instalación (Random Forest):
+  residencial  MAE=0.095  RMSE=0.154  R2=0.9545  MAPE=7.74 %
+  comercial    MAE=0.610  RMSE=0.990  R2=0.9881  MAPE=6.19 %
+  industrial   MAE=3.315  RMSE=4.416  R2=0.9745  MAPE=4.10 %
+  educativa    MAE=1.728  RMSE=3.171  R2=0.9843  MAPE=6.47 %
+
+Importancia de variables (Random Forest, agregada por variable original):
+  consumo_lag_1h            0.9585
+  consumo_lag_168h          0.0244
+  hora_sin                  0.0050
+  hora                      0.0038
+  hora_cos                  0.0024
+  consumo_lag_24h           0.0022
+  consumo_media_movil_24h   0.0007
+  temperatura_c             0.0005
+  ciudad                    0.0004
+  superficie_m2             0.0003
+  num_ocupantes             0.0003
+  humedad_pct               0.0003
+  dia_anio                  0.0002
+  dia_semana_num            0.0002
+  es_festivo                0.0002
+  tipo_instalacion          0.0001
+  temp_x_hora_pico          0.0001
+  es_fin_semana             0.0001
+  mes_sin                   0.0000
+  mes_cos                   0.0000
+  mes                       0.0000
+
+Intervalo de percentiles 5-95 de los árboles: cobertura empírica en prueba = 77.7% (nominal 90 %).
+
+Anti-fuga: lags calculados solo con valores pasados (preparar_datos.py); división temporal;
+escalado y OneHot dentro del Pipeline; selección del modelo con validación cruzada temporal.
+Modelo guardado en: /home/claude/ICD/models/modelo_consumo.joblib
+Métricas en: /home/claude/ICD/models/metricas_modelos.json
+Predicciones de prueba: /home/claude/ICD/outputs/predicciones_test.csv
+Tiempo total de ejecución: 98 s

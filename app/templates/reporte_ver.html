@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}{{ nombre }}{% endblock %}
+{% block contenido %}
+<p><a href="{{ url_for('reportes') }}">← Todos los informes</a></p>
+<h1>{{ c.titulo }}</h1>
+{% if nuevo %}<div class="resultado-js bien">Informe generado y registrado en la blockchain.</div>{% endif %}
+<p class="lead">Archivo <code>{{ nombre }}</code> · generado el {{ c.fecha_generacion }}</p>
+
+<section class="tarjeta {{ 'destacada' if ver.integro else 'error' }}">
+  <h2>Integridad</h2>
+  <p><span class="insignia {{ 'ok' if ver.integro else 'mal' }} grande">{{ 'ÍNTEGRO' if ver.integro else ('MODIFICADO' if ver.hash_registrado else 'NO REGISTRADO') }}</span> {{ ver.mensaje }}</p>
+  <p class="nota">SHA-256 del archivo: <code>{{ ver.hash_calculado }}</code>{% if ver.bloque is not none %} · <a href="{{ url_for('blockchain', hash=ver.hash_calculado) }}#explorador">ver bloque #{{ ver.bloque }}</a>{% endif %}</p>
+  <p><a class="boton chico" href="{{ url_for('reporte_descargar', nombre=nombre) }}">Descargar JSON</a>
+     <a class="boton secundario chico" href="{{ url_for('reporte_descargar', nombre=txt) }}">Descargar TXT</a></p>
+</section>
+
+<section class="tarjeta">
+  <h2>Texto del informe</h2>
+  <div class="texto-nlg">{% for p in c.texto_nlg.split('\n\n') %}<p>{{ p }}</p>{% endfor %}</div>
+</section>
+
+<section class="dos-col">
+  <div class="tarjeta"><h2>Predicciones de 24 h</h2>
+    {% for p in c.predicciones %}
+      <h3>{{ p.id_instalacion }} ({{ p.tipo }}) · {{ p.fecha }}</h3>
+      <p>Total {{ p.total_24h_kwh|num(1) }} kWh · pico {{ p.pico_kwh|num(2) }} kWh a las {{ p.hora_pico }}</p>
+      {% set cfg = {'type':'line','data':{'labels': p.horas|map(attribute='hora')|list,'datasets':[{'label':'kWh','data': p.horas|map(attribute='kwh')|list,'borderColor':'#e76f51','tension':0.25,'pointRadius':1}]},'options':{'responsive':True,'maintainAspectRatio':False,'plugins':{'legend':{'display':False}}}} %}
+      <div class="grafica chica" data-chart='{{ cfg|tojson }}'></div>
+    {% endfor %}
+  </div>
+  <div class="tarjeta"><h2>Cifras clave</h2>
+    <table class="tabla"><tbody>
+      <tr><td>Registros analizados</td><td class="num">{{ c.datos.n_registros|num }}</td></tr>
+      <tr><td>Instalaciones</td><td class="num">{{ c.datos.n_instalaciones }}</td></tr>
+      <tr><td>Consumo total</td><td class="num">{{ c.datos.consumo_total_kwh|num(0) }} kWh</td></tr>
+      <tr><td>Modelo</td><td class="num">{{ c.modelo.nombre }}</td></tr>
+      <tr><td>R² / MAE / RMSE</td><td class="num">{{ c.modelo.r2|num(3) }} / {{ c.modelo.mae|num(2) }} / {{ c.modelo.rmse|num(2) }}</td></tr>
+      <tr><td>Perfiles (k) / silhouette</td><td class="num">{{ c.clusters.k }} / {{ c.clusters.silhouette|num(2) }}</td></tr>
+      <tr><td>Reportes de usuarios</td><td class="num">{{ c.pnl.n_reportes|num }}</td></tr>
+    </tbody></table>
+  </div>
+</section>
+{% endblock %}

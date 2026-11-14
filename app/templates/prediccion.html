@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block titulo %}Predicción{% endblock %}
+{% block contenido %}
+<h1>Predecir el consumo</h1>
+<p class="lead">Elige una instalación, una fecha y hora, y las condiciones del clima. El sistema estima cuántos kWh se consumirán esa hora.</p>
+
+<section class="tarjeta">
+  <form method="post" action="{{ url_for('prediccion') }}" class="formulario" id="form-pred">
+    <label>Instalación
+      <select name="id_instalacion">
+        {% for i in instalaciones %}<option value="{{ i.id }}" {{ 'selected' if form.id_instalacion == i.id }}>{{ i.id }} · {{ i.tipo|capitalize }} · {{ i.ciudad }}</option>{% endfor %}
+      </select></label>
+    <label>Fecha y hora
+      <input type="datetime-local" name="fecha_hora" value="{{ form.fecha_hora }}" required></label>
+    <label>Temperatura (°C)
+      <input type="number" step="0.1" name="temperatura_c" value="{{ form.temperatura_c }}" min="-10" max="55" required></label>
+    <label>Humedad (%)
+      <input type="number" step="0.1" name="humedad_pct" value="{{ form.humedad_pct }}" min="0" max="100" required></label>
+    <label class="check"><input type="checkbox" name="es_festivo" value="1" {{ 'checked' if form.es_festivo }}> Es día festivo</label>
+    <label class="check"><input type="checkbox" name="temp_todo_dia" value="1" {{ 'checked' if form.temp_todo_dia }}> En el pronóstico de 24 h, usar esta temperatura todo el día</label>
+    <div class="acciones">
+      <button class="boton" name="accion" value="predecir">Predecir esta hora</button>
+      <button class="boton secundario" name="accion" value="pronostico">Pronóstico de 24 h del día elegido</button>
+    </div>
+  </form>
+</section>
+
+{% if error %}<section class="tarjeta error">{{ error }}</section>{% endif %}
+
+{% if resultado %}
+<section class="tarjeta destacada" id="resultado">
+  <h2>Resultado para {{ resultado.id_instalacion }} · {{ resultado.fecha_hora }}</h2>
+  <div class="kpis chicos">
+    <div class="kpi grande"><span class="kpi-n">{{ resultado.prediccion_kwh|num(2) }} <small>kWh</small></span><span class="kpi-t">consumo estimado en esa hora</span></div>
+    <div class="kpi"><span class="kpi-n">{{ resultado.intervalo[0]|num(2) }} – {{ resultado.intervalo[1]|num(2) }}</span><span class="kpi-t">rango de los árboles (kWh)</span></div>
+    <div class="kpi"><span class="kpi-n small">{{ resultado.modelo }}</span><span class="kpi-t">modelo usado</span></div>
+  </div>
+  <p class="nota">El <strong>rango de los árboles</strong> es el percentil 5 a 95 de las predicciones individuales de los árboles del modelo. No es un intervalo de confianza del 90 %: en las pruebas contuvo el valor real el 77.7 % de las veces.</p>
+  <details><summary>Ver los datos que usó el modelo</summary>
+    <table class="tabla"><tbody>{% for k, v in resultado.entradas.items() %}<tr><td>{{ k }}</td><td class="num">{{ v }}</td></tr>{% endfor %}</tbody></table>
+    <p class="nota">El consumo de hace 1 h, 24 h y 168 h se toma del histórico; si esa fecha es futura, se usa el último valor conocido de la misma hora.</p>
+  </details>
+
+  <h3>Guardar en la blockchain</h3>
+  <p>Registra la huella digital (SHA-256) de esta predicción para poder demostrar después que no fue modificada.</p>
+  <button class="boton" id="btn-registrar" type="button">Registrar en Blockchain</button>
+  <div id="registro-res" class="resultado-js" hidden></div>
+</section>
+{% endif %}
+
+{% if pronostico %}
+<section class="tarjeta destacada" id="pronostico">
+  <h2>Pronóstico de 24 horas · {{ pronostico.id_instalacion }} · {{ pronostico.fecha }}</h2>
+  <div class="kpis chicos">
+    <div class="kpi"><span class="kpi-n">{{ pronostico.total|num(1) }} <small>kWh</small></span><span class="kpi-t">consumo total previsto del día</span></div>
+    <div class="kpi"><span class="kpi-n">{{ pronostico.pico.prediccion_kwh|num(2) }} <small>kWh</small></span><span class="kpi-t">pico a las {{ pronostico.pico.fecha_hora[11:16] }}</span></div>
+  </div>
+  {% set filas = pronostico.filas %}
+  {% set cfg = {'type':'line','data':{'labels': filas|map(attribute='fecha_hora')|map('hora_txt')|list,
+     'datasets':[
+       {'label':'Predicción (kWh)','data': filas|map(attribute='prediccion_kwh')|list,'borderColor':'#e76f51','backgroundColor':'#e76f51','borderWidth':2.5,'tension':0.25,'pointRadius':2},
+       {'label':'Rango de los árboles (máx.)','data': filas|map(attribute='intervalo')|map('last')|list,'borderColor':'rgba(69,123,157,.5)','borderDash':[5,4],'borderWidth':1,'pointRadius':0,'fill':False},
+       {'label':'Rango de los árboles (mín.)','data': filas|map(attribute='intervalo')|map('first')|list,'borderColor':'rgba(69,123,157,.5)','borderDash':[5,4],'borderWidth':1,'pointRadius':0,'fill':'-1','backgroundColor':'rgba(69,123,157,.12)'}]},
+     'options':{'responsive':True,'maintainAspectRatio':False,'scales':{'y':{'beginAtZero':True,'title':{'display':True,'text':'kWh'}}}}} %}
+  <div class="grafica" data-chart='{{ cfg|tojson }}'></div>
+  <details open><summary>Tabla hora por hora</summary>
+    <div class="tabla-caja"><table class="tabla">
+      <thead><tr><th>Hora</th><th>Predicción (kWh)</th><th>Rango de los árboles (kWh)</th></tr></thead>
+      <tbody>{% for f in filas %}<tr><td>{{ f.fecha_hora[11:16] }}</td><td class="num">{{ f.prediccion_kwh|num(2) }}</td><td class="num">{{ f.intervalo[0]|num(2) }} – {{ f.intervalo[1]|num(2) }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </details>
+  <p class="nota">Cada hora se predice usando las predicciones de las horas anteriores, por lo que el error puede irse acumulando a lo largo del día. Si no se indica lo contrario, se usa la temperatura típica de cada hora de las últimas dos semanas.</p>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if resultado %}
+<script>
+document.getElementById('btn-registrar').addEventListener('click', async function () {
+  const btn = this, caja = document.getElementById('registro-res');
+  btn.disabled = true; btn.textContent = 'Registrando…';
+  try {
+    const f = document.getElementById('form-pred');
+    const datos = {id_instalacion: '{{ resultado.id_instalacion }}', fecha_hora: '{{ resultado.fecha_hora }}',
+      temperatura_c: {{ resultado.entradas.temperatura_c }}, humedad_pct: {{ resultado.entradas.humedad_pct }}, es_festivo: {{ resultado.entradas.es_festivo }}};
+    const r = await fetch('{{ url_for("api_registrar_prediccion") }}', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos)});
+    const j = await r.json();
+    caja.hidden = false;
+    if (!j.ok) { caja.className = 'resultado-js mal'; caja.textContent = j.error; btn.disabled = false; btn.textContent = 'Registrar en Blockchain'; return; }
+    caja.className = 'resultado-js bien';
+    const b = j.bloque;
+    caja.innerHTML = '<strong>Registrado en el bloque #' + b.indice + '</strong><br>Nombre: ' + b.datos.nombre +
+      '<br>Hash del documento: <code>' + b.datos.hash_documento + '</code><br>Hash del bloque: <code>' + b.hash + '</code>' +
+      '<br><a href="{{ url_for("blockchain") }}?hash=' + b.datos.hash_documento + '">Ver en el explorador</a>' +
+      '<details><summary>Contenido registrado (pégalo en "Verificar" para comprobarlo)</summary><pre class="codigo">' +
+      j.contenido_texto.replace(/</g,'&lt;') + '</pre></details>';
+    btn.textContent = 'Registrado ✔';
+  } catch (e) { caja.hidden = false; caja.className = 'resultado-js mal'; caja.textContent = 'Error: ' + e; btn.disabled = false; btn.textContent = 'Registrar en Blockchain'; }
+});
+</script>
+{% endif %}
+{% endblock %}

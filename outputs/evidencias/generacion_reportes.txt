@@ -1,0 +1,55 @@
+EVIDENCIA - GENERACIÓN DE REPORTES DE USUARIOS (SIAPE)
+============================================================
+Reportes generados: 4000
+Periodo: 2026-01-01 06:27:00 a 2026-07-01 21:00:00
+Textos únicos: 4000 (100.0%)
+Casos mixtos/ambiguos: 405 (10.1%)
+Etiquetas con ruido deliberado: 116 (2.9%)
+
+Distribución de sentimiento (etiqueta):
+sentimiento_etiqueta
+negativo    1531
+positivo    1343
+neutral     1126
+
+Distribución por canal:
+canal
+app        1357
+portal     1030
+correo      830
+llamada     783
+
+Reportes por instalación:
+id_instalacion
+COM-001    400
+COM-002    404
+COM-003    390
+EDU-001    367
+EDU-002    397
+IND-001    409
+IND-002    410
+RES-001    378
+RES-002    428
+RES-003    417
+
+Entidades esperadas insertadas por tipo:
+  DISPOSITIVO: 1998
+  LUGAR: 1729
+  FECHA: 1351
+  FOLIO: 1112
+  ORGANIZACION: 1031
+  PERSONA: 912
+  ENERGIA: 846
+  HORA: 825
+  MONTO: 779
+  CODIGO_INSTALACION: 763
+
+Ejemplos:
+[REP-00556|COM-001|correo|positivo] Saludos cordiales. Las luminarias trabaja de maravilla desde que lo revisaron. Atentamente, Sr. Héctor Ramírez
+[REP-03492|RES-001|llamada|negativo] cliente indica que las variaciones de voltaje echaron a perder el aire acondicionado. el aire acondicionado hace un ruido muy fuerte y huele a quemado. lectura actual: 213 kWh. zona: Veracruz. gracias.
+[REP-00528|COM-001|portal|positivo] Asunto: Sin cortes desde el mantenimiento. El refrigerador funciona muy bien desde la reparación. Hora aproximada: a las 16:20.
+[REP-03926|RES-001|app|negativo] El recibo sallió más barato esta vez: solo $1,420.90; no obstante, qué desastre, no lo recomiendo. Ocurrió el 8 de junio a las 2:50. Mi código de instalación es RES-001. 😠
+[REP-02990|EDU-002|portal|neutral] Comentario: Queda registrado el mantenimiento de las luminarias según lo acordado. Reporto desde Xalapa.
+[REP-00071|EDU-001|llamada|negativo] Reporte telefónico: Fue un fiasco, todo salió mal. Es inaceptable que nos cobren $82,890 por un cosnumo que no corresponde. Para su seguimiento, EDU-001 con el folio FOL-985156.
+[REP-01757|COM-002|portal|positivo] reporte: consulta sobre los kilowatts-hora facturados; no obstante, muchas gracias a Sr. Martha Domínguez por su rapidez. sucedió el 13 de marzo 02:05 hrs. muchas gracias!
+[REP-00212|COM-001|portal|negativo] Comentario: El técnico dejó el problema peor. Se presentó el 06/01/2026 a las 21:20. Les reporto otra vez el folio FOL-321592!!

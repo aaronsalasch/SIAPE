@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block titulo %}Reportes de usuarios (PNL){% endblock %}
+{% block contenido %}
+<h1>Análisis de reportes de usuarios (lenguaje natural)</h1>
+<p class="lead">Los usuarios escriben quejas, fallas y comentarios. El sistema lee el texto y detecta si el mensaje es positivo, negativo o neutral, y extrae los datos importantes: equipos, lugares, fechas, folios, montos…</p>
+
+<section class="tarjeta">
+  <h2>Prueba con tu propio texto</h2>
+  <form method="post" action="{{ url_for('pnl') }}#analisis" class="formulario una-col">
+    <label>Escribe o pega un reporte
+      <textarea name="texto" id="texto-pnl" rows="4" maxlength="3000" placeholder="Ej.: El medidor de RES-001 marca mal desde ayer, CFE no responde. Folio FOL-123456.">{{ texto }}</textarea></label>
+    <div class="acciones">
+      <button class="boton" type="submit">Analizar texto</button>
+      <span class="nota">Ejemplos:</span>
+      {% for e in ejemplos %}<button type="button" class="boton secundario chico" data-ejemplo="{{ e }}">Ejemplo {{ loop.index }}</button>{% endfor %}
+    </div>
+  </form>
+  {% if error %}<p class="error-txt">{{ error }}</p>{% endif %}
+</section>
+
+{% if analisis %}
+{% set s = analisis.sentimiento %}
+<section class="tarjeta destacada" id="analisis">
+  <h2>Resultado del análisis</h2>
+  <div class="dos-col">
+    <div>
+      <h3>Sentimiento</h3>
+      <p><span class="insignia sent-{{ s.sentimiento }} grande">{{ s.sentimiento|capitalize }}</span></p>
+      <div class="barras">
+        {% for k, v in s.probabilidades.items()|sort(attribute='1', reverse=true) %}
+        <div class="barra-fila"><span class="barra-etq">{{ k|capitalize }}</span>
+          <span class="barra-pista"><span class="barra-rel sent-bg-{{ k }}" style="width: {{ (v * 100)|round(1) }}%"></span></span>
+          <span class="barra-val">{{ (v * 100)|num(1) }} %</span></div>
+        {% endfor %}
+      </div>
+      <p class="nota">Probabilidad que el clasificador asigna a cada categoría.</p>
+    </div>
+    <div>
+      <h3>Entidades encontradas ({{ analisis.entidades|length }})</h3>
+      <p class="texto-resaltado">{{ resaltado }}</p>
+      <div class="leyenda">{% for t, clase in colores.items() %}<span class="ent {{ clase }}">{{ nombres[t] }}</span>{% endfor %}</div>
+      {% if analisis.entidades %}
+      <table class="tabla chica"><thead><tr><th>Texto</th><th>Tipo</th></tr></thead><tbody>
+        {% for e in analisis.entidades %}<tr><td>{{ e.texto }}</td><td><span class="ent {{ colores.get(e.tipo, 'ent-otro') }}">{{ nombres.get(e.tipo, e.tipo) }}</span></td></tr>{% endfor %}
+      </tbody></table>
+      {% endif %}
+    </div>
+  </div>
+  {% set p = analisis.preprocesado %}
+  <details open><summary>Cómo se preparó el texto (preprocesamiento)</summary>
+    <dl class="def">
+      <dt>Texto normalizado</dt><dd>{{ p.normalizado }}</dd>
+      <dt>Tokens (palabras)</dt><dd>{% for t in p.tokens %}<span class="chip">{{ t }}</span> {% endfor %}</dd>
+      <dt>Sin palabras vacías</dt><dd>{% for t in p.sin_stopwords %}<span class="chip">{{ t }}</span> {% endfor %}</dd>
+      <dt>Raíces (stems)</dt><dd>{% for t in p.stems %}<span class="chip">{{ t }}</span> {% endfor %}</dd>
+      <dt>Lemas</dt><dd>{% for t in p.lemas %}<span class="chip">{{ t }}</span> {% endfor %}</dd>
+    </dl>
+    <p class="nota">Se quitan mayúsculas y signos, se separa en palabras, se eliminan palabras sin significado propio (como "de", "la") y se reducen las palabras a su raíz para que "fallas" y "falló" cuenten como lo mismo. Las negaciones ("no", "sin") se conservan porque cambian el sentido.</p>
+  </details>
+</section>
+{% endif %}
+
+<section class="dos-col">
+  <div class="tarjeta">
+    <h2>Calidad del clasificador</h2>
+    <p>Modelo elegido: <strong>{{ met.seleccionado }}</strong> (se comparó contra {{ met.modelos|length - 1 }} más, por F1 macro).</p>
+    <table class="tabla"><thead><tr><th>Modelo</th><th>Exactitud</th><th>F1 macro</th></tr></thead><tbody>
+      {% for n, m in met.modelos.items() %}<tr class="{{ 'fila-sel' if n == met.seleccionado }}"><td>{{ n }}</td><td class="num">{{ m.accuracy|num(3) }}</td><td class="num">{{ m.f1_macro|num(3) }}</td></tr>{% endfor %}
+    </tbody></table>
+    {% if met.ner_global %}<p class="nota">Detección de entidades (reglas + diccionarios): precisión {{ met.ner_global.precision|num(3) }}, cobertura {{ met.ner_global.recall|num(3) }}. Los textos son simulados con plantillas, por lo que el resultado es optimista frente a texto real.</p>{% endif %}
+  </div>
+  <div class="tarjeta">
+    <h2>Sentimiento de los {{ total|num }} reportes</h2>
+    {% set cfg = {'type':'doughnut','data':{'labels': dist.keys()|list|map('capitalize')|list,'datasets':[{'data': dist.values()|list,'backgroundColor': dist.keys()|map('cor_sent')|list}]},'options':{'responsive':True,'maintainAspectRatio':False}} %}
+    <div class="grafica" data-chart='{{ cfg|tojson }}' data-fallback="{{ url_for('figura', nombre='pnl_distribucion_sentimiento.png') }}"></div>
+  </div>
+</section>
+
+<section class="tarjeta" id="reportes-recientes">
+  <h2>Reportes recientes</h2>
+  <form method="get" action="{{ url_for('pnl') }}#reportes-recientes" class="filtros">
+    <label>Sentimiento <select name="sentimiento"><option value="">Todos</option>
+      {% for s in ['positivo','neutral','negativo'] %}<option value="{{ s }}" {{ 'selected' if f_sent == s }}>{{ s|capitalize }}</option>{% endfor %}</select></label>
+    <label>Instalación <select name="instalacion"><option value="">Todas</option>
+      {% for i in instalaciones %}<option value="{{ i }}" {{ 'selected' if f_inst == i }}>{{ i }}</option>{% endfor %}</select></label>
+    <label>Contiene <input type="search" name="q" value="{{ f_q }}" placeholder="palabra"></label>
+    <button class="boton chico" type="submit">Filtrar</button>
+    <a class="boton secundario chico" href="{{ url_for('pnl') }}#reportes-recientes">Limpiar</a>
+  </form>
+  <p class="nota">Mostrando los {{ filas|length }} más recientes de {{ total_filtrado|num }} que cumplen el filtro.</p>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Fecha</th><th>Instalación</th><th>Canal</th><th>Texto</th><th>Sentimiento</th><th>Confianza</th></tr></thead>
+    <tbody>
+    {% for f in filas %}
+      <tr><td class="nowrap">{{ f.fecha_hora[:16] }}</td><td>{{ f.id_instalacion }}</td><td>{{ f.canal }}</td><td class="texto-largo">{{ f.texto }}</td>
+        <td><span class="insignia sent-{{ f.sentimiento_predicho }}">{{ f.sentimiento_predicho }}</span></td><td class="num">{{ (f.confianza * 100)|num(0) }} %</td></tr>
+    {% else %}<tr><td colspan="6">No hay reportes con ese filtro.</td></tr>{% endfor %}
+    </tbody></table></div>
+</section>
+
+<section class="tarjeta"><h2>Gráficas del análisis</h2><div class="galeria">
+  {% for f in figs %}<figure><img loading="lazy" src="{{ url_for('figura', nombre=f.archivo) }}" alt="{{ f.titulo }}"><figcaption>{{ f.titulo }}</figcaption></figure>{% endfor %}</div></section>
+{% endblock %}

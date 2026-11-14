@@ -1,0 +1,55 @@
+EVIDENCIA - ENTRENAMIENTO PNL (SENTIMIENTO + NER)
+================================================================
+Reportes: 4000 | entrenamiento: 3200 | prueba: 800 (estratificado, semilla 42)
+Representación: TF-IDF unigramas+bigramas sobre stems (sin stopwords, con negaciones).
+
+1. COMPARACIÓN DE CLASIFICADORES (conjunto de prueba)
+Modelo                     Accuracy  F1-macro   Prec.  Recall  F1 CV(5)
+Naive Bayes multinomial      0.9337    0.9350  0.9357  0.9344    0.9289
+Regresión Logística          0.9275    0.9294  0.9305  0.9284    0.9294
+SVM lineal                   0.9363    0.9377  0.9384  0.9370    0.9311
+
+Seleccionado (mayor F1-macro en validación cruzada): SVM lineal
+
+2. REPORTE DE CLASIFICACIÓN (modelo seleccionado, prueba)
+              precision    recall  f1-score   support
+
+    negativo      0.934     0.931     0.933       306
+     neutral      0.968     0.947     0.957       225
+    positivo      0.913     0.933     0.923       269
+
+    accuracy                          0.936       800
+   macro avg      0.938     0.937     0.938       800
+weighted avg      0.937     0.936     0.936       800
+
+Matriz de confusión (filas=real, columnas=predicho; orden: negativo, neutral, positivo)
+[[285   3  18]
+ [  6 213   6]
+ [ 14   4 251]]
+
+Nota: la accuracy no es 1.0 porque ~10 % de los reportes son mixtos/ambiguos y ~3 % de las
+etiquetas tienen ruido deliberado (ver docstring de src/data/generar_reportes.py).
+
+3. TÉRMINOS MÁS INFLUYENTES POR CLASE (Regresión Logística)
+  negativo: no (5.221), emojinegat (3.378), no qued (2.767), nadie (2.56), rat (2.509), lleg (2.357), mal (2.317), respuest (2.258), apagon (2.237), lentitud (2.202), exij (2.098), quem (2.098)
+  neutral: requier (4.309), inform (4.032), program (3.654), solicit (3.634), are (3.111), pregunt (3.022), env (2.927), consum registr (2.833), revision (2.722), horar (2.606), avi (2.532), estatu (2.465)
+  positivo: excelent (3.769), muy (3.378), funcion (3.045), gran (2.823), much (2.643), grac (2.619), felicit (2.597), qued (2.431), period sol (2.418), maravill (2.386), sin cort (2.386), agradec (2.239)
+
+4. NER (diccionarios + regex) contra entidades_esperadas del generador
+(un acierto = mismo texto en minúsculas y mismo tipo dentro del reporte)
+Tipo                 Precisión   Recall      F1  Soporte
+DISPOSITIVO              1.000    0.995   0.998     1998
+LUGAR                    1.000    0.992   0.996     1729
+ORGANIZACION             1.000    1.000   1.000     1031
+FECHA                    1.000    1.000   1.000     1351
+HORA                     1.000    1.000   1.000      825
+CODIGO_INSTALACION       1.000    1.000   1.000      763
+FOLIO                    1.000    1.000   1.000     1112
+MONTO                    1.000    1.000   1.000      779
+ENERGIA                  1.000    1.000   1.000      846
+PERSONA                  1.000    1.000   1.000      912
+GLOBAL (micro)           1.000    0.998   0.999
+
+Limitación: los alias coloquiales ('refri', 'clima') y errores de dedo en ciudades no están
+en los diccionarios, por eso el recall de DISPOSITIVO y LUGAR no es 1.0. Al ser datos
+simulados con patrones regulares, el NER sobre texto real sería menos perfecto.

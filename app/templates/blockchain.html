@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block titulo %}Blockchain{% endblock %}
+{% block contenido %}
+<h1>Trazabilidad con Blockchain</h1>
+<p class="lead">Cada informe, predicción, modelo y conjunto de datos importante se registra aquí con su <strong>huella digital (hash SHA-256)</strong>. Si alguien cambia aunque sea una coma del documento, su huella cambia y la verificación lo detecta. La cadena guarda la huella, no el documento.</p>
+
+<section class="kpis">
+  <div class="kpi"><span class="kpi-n">{{ n_total }}</span><span class="kpi-t">bloques en la cadena</span></div>
+  <div class="kpi"><span class="kpi-n">{{ dificultad }}</span><span class="kpi-t">ceros iniciales exigidos (prueba de trabajo)</span></div>
+  {% for t, n in tipos.items() %}<div class="kpi"><span class="kpi-n">{{ n }}</span><span class="kpi-t">bloques de tipo "{{ t }}"</span></div>{% endfor %}
+</section>
+
+<section class="dos-col">
+  <div class="tarjeta">
+    <h2>Validar la cadena</h2>
+    <p>Recalcula todos los hashes, los enlaces entre bloques y la prueba de trabajo.</p>
+    <button class="boton" id="btn-validar" type="button" data-url="{{ url_for('blockchain_validar') }}">Validar cadena</button>
+    <div id="validar-res" class="resultado-js" hidden></div>
+  </div>
+  <div class="tarjeta">
+    <h2>Demostración de alteración en vivo</h2>
+    <p>Crea una cadena temporal, altera un documento y un bloque, y muestra cómo se detecta. <strong>No toca la cadena real.</strong></p>
+    <button class="boton secundario" id="btn-demo" type="button" data-url="{{ url_for('blockchain_demo') }}">Ejecutar demostración</button>
+    <div id="demo-res" class="resultado-js" hidden></div>
+  </div>
+</section>
+
+<section class="tarjeta" id="verificar">
+  <h2>Verificar un archivo o un texto</h2>
+  <p>Sube un archivo (por ejemplo un informe .json) o pega un texto/JSON (por ejemplo una predicción) para comprobar si coincide con lo registrado.</p>
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('blockchain_verificar') }}#verificar" class="formulario una-col">
+    <label>Archivo <input type="file" name="archivo"></label>
+    <label>…o texto / JSON pegado
+      <textarea name="texto" rows="4" placeholder='Pega aquí el contenido que quieres comprobar'></textarea></label>
+    <label>Nombre registrado (opcional, para texto pegado)
+      <input type="text" name="nombre" placeholder="ej.: prediccion_RES-001_2026-07-02_200000"></label>
+    <div class="acciones"><button class="boton" type="submit">Verificar integridad</button></div>
+  </form>
+  {% if verificacion %}
+    {% if verificacion.error %}<div class="resultado-js mal">{{ verificacion.error }}</div>
+    {% else %}
+    {% set r = verificacion.resultado %}
+    <div class="resultado-js {{ 'bien' if r.integro else 'mal' }}">
+      <strong>{{ '✔ ÍNTEGRO' if r.integro else ('✖ MODIFICADO' if r.hash_registrado else '? NO REGISTRADO') }}</strong> · {{ verificacion.origen }}<br>
+      {{ r.mensaje }}<br>
+      Hash calculado: <code>{{ r.hash_calculado }}</code><br>
+      Hash registrado: <code>{{ r.hash_registrado or '—' }}</code>{% if r.bloque is not none %} (bloque #{{ r.bloque }}){% endif %}
+    </div>
+    {% endif %}
+  {% endif %}
+</section>
+
+<section class="tarjeta" id="explorador">
+  <h2>Explorador de bloques</h2>
+  <form method="get" action="{{ url_for('blockchain') }}#explorador" class="filtros">
+    <label>Buscar por hash (de bloque o de documento) <input type="text" name="hash" value="{{ busqueda.hash if busqueda else '' }}" size="40"></label>
+    <button class="boton chico" type="submit">Buscar</button>
+  </form>
+  {% if busqueda %}
+    {% if busqueda.bloque %}<div class="resultado-js bien">Encontrado en el bloque <strong>#{{ busqueda.bloque.indice }}</strong> ({{ busqueda.bloque.datos.tipo }}: {{ busqueda.bloque.datos.nombre }}).</div>
+    {% else %}<div class="resultado-js mal">No hay ningún bloque con ese hash.</div>{% endif %}
+  {% endif %}
+  <p class="nota">Mostrando {{ bloques|length }} de {{ n_total }} bloques, del más reciente al más antiguo.
+    {% if not todos and n_total > 30 %}<a href="{{ url_for('blockchain', todos=1) }}#explorador">Mostrar todos</a>{% endif %}</p>
+  <div class="bloques">
+  {% for b in bloques %}
+    <article class="bloque {{ 'resaltado' if busqueda and busqueda.bloque and busqueda.bloque.indice == b.indice }}">
+      <header><span class="bloque-n">#{{ b.indice }}</span><span class="insignia tipo-{{ b.datos.tipo }}">{{ b.datos.tipo }}</span><strong>{{ b.datos.nombre }}</strong><time>{{ b.marca_tiempo }}</time></header>
+      <dl class="hashes">
+        <dt>Hash del documento</dt><dd><code>{{ b.datos.hash_documento }}</code></dd>
+        <dt>Hash del bloque</dt><dd><code>{{ b.hash }}</code></dd>
+        <dt>Hash anterior</dt><dd><code>{{ b.hash_anterior }}</code></dd>
+        <dt>Nonce</dt><dd>{{ b.nonce }}</dd>
+        {% if b.datos.metadatos %}<dt>Metadatos</dt><dd class="meta">{% for k, v in b.datos.metadatos.items() %}<span class="chip">{{ k }}: {{ v }}</span> {% endfor %}</dd>{% endif %}
+      </dl>
+    </article>
+  {% endfor %}
+  </div>
+</section>
+{% endblock %}

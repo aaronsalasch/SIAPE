@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block titulo %}Datos{% endblock %}
+{% block contenido %}
+<h1>Datos de consumo</h1>
+<p class="lead">Aquí se ve con qué información trabaja el sistema y qué problemas tenían los datos originales antes de limpiarlos.</p>
+
+<section class="kpis">
+  <div class="kpi"><span class="kpi-n">{{ tam.filas_raw|num }}</span><span class="kpi-t">filas originales (con errores)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ tam.filas_proc|num }}</span><span class="kpi-t">filas ya limpias</span></div>
+  <div class="kpi"><span class="kpi-n">{{ tam.columnas_proc }}</span><span class="kpi-t">columnas (incluye variables creadas)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ tam.reportes|num }}</span><span class="kpi-t">reportes de texto de usuarios</span></div>
+</section>
+
+<section class="tarjeta">
+  <h2>Consumo diario por tipo de instalación</h2>
+  {% set cols = {'residencial':'#2a9d8f','comercial':'#e9c46a','industrial':'#e76f51','educativa':'#457b9d'} %}
+  {% set cfg = {'type':'line','data':{'labels':res.dias,'datasets':[]},'options':{'responsive':True,'maintainAspectRatio':False,'elements':{'point':{'radius':0}},'scales':{'y':{'title':{'display':True,'text':'kWh por día'}}}}} %}
+  {% for t, serie in res.diario.items() %}{% set _ = cfg.data.datasets.append({'label': t|capitalize, 'data': serie, 'borderColor': cols.get(t,'#888'), 'borderWidth': 1.6, 'tension': 0.2}) %}{% endfor %}
+  <div class="grafica" data-chart='{{ cfg|tojson }}'></div>
+  <p class="nota">La industria consume mucho más que el resto, por eso el modelo se evalúa también por tipo.</p>
+</section>
+
+<section class="dos-col">
+  <div class="tarjeta">
+    <h2>Calidad de los datos: antes y después</h2>
+    <table class="tabla">
+      <thead><tr><th>Columna</th><th>Valores vacíos antes</th><th>Después</th></tr></thead>
+      <tbody>
+      {% for c in columnas_nulos %}
+        <tr><td>{{ c }}</td><td class="num">{{ nulos_antes.get(c, 0)|num }}</td><td class="num">{{ nulos_desp.get(c, 0)|num }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <ul class="lista">
+      <li><strong>{{ prep.duplicados_eliminados|num }}</strong> filas duplicadas eliminadas.</li>
+      <li><strong>{{ prep.atipicos.total_detectados|num }}</strong> valores atípicos detectados: {{ prep.atipicos.temperatura_fuera_de_rango }} temperaturas imposibles, {{ prep.atipicos.consumo_negativo }} consumos negativos y {{ prep.atipicos.consumo_pico_iqr }} picos extremos. Se marcaron como vacíos y se estimaron.</li>
+      <li>Vacíos rellenados con: {{ prep.estrategia_nulos }}.</li>
+      <li>{{ prep.filas_descartadas_sin_historia|num }} filas del inicio se descartaron porque no tenían una semana de historia para calcular el consumo anterior.</li>
+    </ul>
+  </div>
+  <div class="tarjeta">
+    <h2>Qué se hizo con los datos</h2>
+    <ul class="lista">{% for t in prep.transformaciones %}<li>{{ t }}</li>{% endfor %}</ul>
+    <h3>Variables nuevas</h3>
+    <p>{% for v in prep.variables_creadas %}<span class="chip">{{ v }}</span> {% endfor %}</p>
+    <h3>División entrenamiento / prueba</h3>
+    <p>La división es <strong>por tiempo</strong>: el modelo aprende del pasado y se evalúa con las últimas semanas (desde {{ prep.division.corte }}). Entrenamiento: {{ prep.division.n_entrenamiento|num }} filas · Prueba: {{ prep.division.n_prueba|num }} filas.</p>
+  </div>
+</section>
+
+{% if corr %}
+<section class="tarjeta">
+  <h2>Variables más relacionadas con el consumo relativo</h2>
+  <div class="barras">
+    {% for v, r in corr %}
+    <div class="barra-fila"><span class="barra-etq">{{ v }}</span>
+      <span class="barra-pista"><span class="barra-rel {{ 'neg' if r < 0 }}" style="width: {{ ((r if r > 0 else -r) * 100)|round(1) }}%"></span></span>
+      <span class="barra-val">{{ r|num(2) }}</span></div>
+    {% endfor %}
+  </div>
+  <p class="nota">Correlación de Pearson con el consumo relativo a cada instalación (positiva: suben juntas; negativa: una sube cuando la otra baja).</p>
+</section>
+{% endif %}
+
+<section class="tarjeta">
+  <h2>Gráficas de exploración (EDA)</h2>
+  <div class="galeria">
+    {% for f in figs %}<figure><img loading="lazy" src="{{ url_for('figura', nombre=f.archivo) }}" alt="{{ f.titulo }}"><figcaption>{{ f.titulo }}</figcaption></figure>{% endfor %}
+  </div>
+</section>
+{% endblock %}

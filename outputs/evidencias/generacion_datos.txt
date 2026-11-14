@@ -1,0 +1,36 @@
+EVIDENCIA - GENERACIÓN DE DATOS DE CONSUMO (SIAPE)
+Fecha de ejecución: 2026-11-14 21:25:31
+Semilla: 42
+Periodo: 2026-01-01 00:00:00 + 182 días (frecuencia horaria)
+Instalaciones: 10  |  Archivo: /home/claude/ICD/data/raw/consumo_energetico_raw.csv
+
+Conteos de problemas inyectados a propósito:
+  - filas_simuladas: 43680
+  - nulos_temperatura_c: 874
+  - nulos_humedad_pct: 874
+  - nulos_consumo_kwh: 874
+  - atipicos_consumo_negativo: 72
+  - atipicos_pico_x8: 72
+  - atipicos_temperatura_99.9: 74
+  - atipicos_total: 218
+  - texto_tipo_instalacion_inconsistente: 1747
+  - texto_dia_semana_inconsistente: 2621
+  - filas_duplicadas: 437
+  - filas_finales: 44117
+  - eventos_paro_ausencia_(dias, no son errores): 30
+
+Muestra del archivo crudo (primeras 5 filas):
+id_registro id_instalacion tipo_instalacion   ciudad          fecha_hora dia_semana  es_festivo  temperatura_c  humedad_pct  superficie_m2  num_ocupantes  consumo_kwh
+ REG-000001        RES-001      residencial Veracruz 2026-01-01 00:00:00     jueves           1           18.9         90.8             90              4        0.559
+ REG-000002        RES-001      residencial Veracruz 2026-01-01 01:00:00     jueves           1           17.7         92.0             90              4        0.471
+ REG-000003        RES-001      residencial Veracruz 2026-01-01 02:00:00     JUEVES           1           18.5         86.8             90              4        0.483
+ REG-000004        RES-001      residencial Veracruz 2026-01-01 03:00:00     jueves           1           17.4         89.2             90              4        0.471
+ REG-000005        RES-001      residencial Veracruz 2026-01-01 04:00:00     jueves           1           18.4         88.7             90              4        0.441
+
+Estadísticos del consumo por tipo (kWh, sin corregir):
+                    count   mean    std     min    25%    50%    75%     max
+tipo_instalacion                                                            
+comercial         12965.0  10.08   8.59  -31.66   3.28   7.83  13.69  175.34
+educativa          8636.0  24.91  24.50  -74.80   7.05  10.71  41.13  583.98
+industrial         8665.0  76.67  36.40 -114.20  54.51  76.61  95.23  922.73
+residencial       12970.0   1.09   0.75   -2.42   0.59   0.91   1.41   20.76

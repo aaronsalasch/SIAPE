@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Aviso{% endblock %}
+{% block contenido %}
+<section class="tarjeta aviso">
+  {% if mensaje %}
+    <h1>{{ mensaje }}</h1>
+    <p><a class="boton" href="{{ url_for('inicio') }}">Volver al inicio</a></p>
+  {% else %}
+    <h1>Faltan datos o modelos para mostrar esta página</h1>
+    <p>Todavía no se han generado estos archivos: <strong>{{ falta|join(', ') }}</strong>.</p>
+    <p>Abre una terminal en la carpeta del proyecto y ejecuta:</p>
+    <pre class="codigo">python pipeline.py</pre>
+    <p>Cuando termine (tarda unos minutos), recarga esta página.</p>
+  {% endif %}
+</section>
+{% endblock %}
