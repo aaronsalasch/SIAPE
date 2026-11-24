@@ -234,7 +234,7 @@
       }
     ]
   },
-  "fecha_entrenamiento": "2026-11-14T21:27:17",
+  "fecha_entrenamiento": "2026-11-16T20:08:21",
   "ner": {
     "DISPOSITIVO": {
       "precision": 1.0,

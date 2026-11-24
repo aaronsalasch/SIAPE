@@ -79,6 +79,232 @@
       "hash_anterior": "0000c6b3c86b53c8f8f95e51799940d813f48102de9be5fed777772fc31a87b7",
       "nonce": 63657,
       "hash": "00005b31c151271cb5bfcc9dc835a36982b2926b61b8b6556337d381309579be"
+    },
+    {
+      "indice": 5,
+      "marca_tiempo": "2026-11-16T04:15:01+00:00",
+      "datos": {
+        "tipo": "prediccion",
+        "nombre": "prediccion_RES-003_2026-07-09_200000",
+        "hash_documento": "0155b98a38ae7f054722b5028eaba88082326eda4b5826a0e53cf53af6617143",
+        "metadatos": {
+          "prediccion_kwh": 1.362,
+          "intervalo": [
+            1.216,
+            1.506
+          ],
+          "modelo": "Random Forest"
+        }
+      },
+      "hash_anterior": "00005b31c151271cb5bfcc9dc835a36982b2926b61b8b6556337d381309579be",
+      "nonce": 72074,
+      "hash": "000049bd31a4195c01db727cfcf4d947dc01e625df36023d31e4c5efd4a461bd"
+    },
+    {
+      "indice": 6,
+      "marca_tiempo": "2026-11-16T04:15:29+00:00",
+      "datos": {
+        "tipo": "prediccion",
+        "nombre": "prediccion_RES-003_2026-08-06_200000",
+        "hash_documento": "a8b9b0db5b39f130a0a718d52f1b30bdf7e7dcce1343f5615ccc9607e300b7e0",
+        "metadatos": {
+          "prediccion_kwh": 1.362,
+          "intervalo": [
+            1.216,
+            1.506
+          ],
+          "modelo": "Random Forest"
+        }
+      },
+      "hash_anterior": "000049bd31a4195c01db727cfcf4d947dc01e625df36023d31e4c5efd4a461bd",
+      "nonce": 118559,
+      "hash": "0000d32fd634cbc8981131cd09ab7bdfc048cdeb6bee1bc4ca51a413050d2f32"
+    },
+    {
+      "indice": 7,
+      "marca_tiempo": "2026-11-17T01:57:59+00:00",
+      "datos": {
+        "tipo": "dataset",
+        "nombre": "consumo_energetico_procesado.csv",
+        "hash_documento": "9759df13d6fb0f7f2fd903ef05a0b869c5070e326a3ad53418aff47b60c4e103",
+        "metadatos": {
+          "tamano_bytes": 9649464
+        }
+      },
+      "hash_anterior": "0000d32fd634cbc8981131cd09ab7bdfc048cdeb6bee1bc4ca51a413050d2f32",
+      "nonce": 29623,
+      "hash": "0000c211a636b5ea6b5d68ac9aef14b823a0c6b2b3c815f571e7603629a3ac34"
+    },
+    {
+      "indice": 8,
+      "marca_tiempo": "2026-11-17T01:57:59+00:00",
+      "datos": {
+        "tipo": "modelo",
+        "nombre": "modelo_consumo.joblib",
+        "hash_documento": "b50e80803d6f7bc21d995d09bd444c5851f6f842b8c80632b6d4306641f8893e",
+        "metadatos": {
+          "tamano_bytes": 21108122
+        }
+      },
+      "hash_anterior": "0000c211a636b5ea6b5d68ac9aef14b823a0c6b2b3c815f571e7603629a3ac34",
+      "nonce": 38407,
+      "hash": "0000c02686135514b642bdaf78a512b4b258f67e84fffeb82ba81a957304e09b"
+    },
+    {
+      "indice": 9,
+      "marca_tiempo": "2026-11-17T01:58:00+00:00",
+      "datos": {
+        "tipo": "metricas",
+        "nombre": "metricas_modelos.json",
+        "hash_documento": "6ccdd3f2abb9b71d404ed20f36bf9e3fd8387a4260f1b80bbd81be62566b2971",
+        "metadatos": {
+          "tamano_bytes": 4531
+        }
+      },
+      "hash_anterior": "0000c02686135514b642bdaf78a512b4b258f67e84fffeb82ba81a957304e09b",
+      "nonce": 58831,
+      "hash": "0000e0aee7c9cc95291ef04bf4d17a083b96138ab916726f2bfb2b968d8ebbf0"
+    },
+    {
+      "indice": 10,
+      "marca_tiempo": "2026-11-17T01:58:04+00:00",
+      "datos": {
+        "tipo": "reporte",
+        "nombre": "reporte_20261116_195804.json",
+        "hash_documento": "cfcd45b903e75f766e5d8631b077f89d314fb1b708ca30ea8f0c2221ecd8d9a7",
+        "metadatos": {
+          "tamano_bytes": 16930,
+          "modelo": "Random Forest",
+          "r2": 0.9948,
+          "n_registros": 42000,
+          "archivo_txt": "reporte_20261116_195804.txt"
+        }
+      },
+      "hash_anterior": "0000e0aee7c9cc95291ef04bf4d17a083b96138ab916726f2bfb2b968d8ebbf0",
+      "nonce": 36386,
+      "hash": "00001abc683b1fed662a806c49e4d37c268ea3606aaf947883b2a8e8f05848f5"
+    },
+    {
+      "indice": 11,
+      "marca_tiempo": "2026-11-17T02:08:25+00:00",
+      "datos": {
+        "tipo": "dataset",
+        "nombre": "consumo_energetico_procesado.csv",
+        "hash_documento": "9759df13d6fb0f7f2fd903ef05a0b869c5070e326a3ad53418aff47b60c4e103",
+        "metadatos": {
+          "tamano_bytes": 9649464
+        }
+      },
+      "hash_anterior": "00001abc683b1fed662a806c49e4d37c268ea3606aaf947883b2a8e8f05848f5",
+      "nonce": 34994,
+      "hash": "000069e1a30a91ac2ea370f37aacdc375a7ed2b93c34795c7fb35c2b2470d682"
+    },
+    {
+      "indice": 12,
+      "marca_tiempo": "2026-11-17T02:08:26+00:00",
+      "datos": {
+        "tipo": "modelo",
+        "nombre": "modelo_consumo.joblib",
+        "hash_documento": "b50e80803d6f7bc21d995d09bd444c5851f6f842b8c80632b6d4306641f8893e",
+        "metadatos": {
+          "tamano_bytes": 21108122
+        }
+      },
+      "hash_anterior": "000069e1a30a91ac2ea370f37aacdc375a7ed2b93c34795c7fb35c2b2470d682",
+      "nonce": 29478,
+      "hash": "00008dae3db4af3e27a038883fcf62a19d37f2d76e68a1715d559296b4d6e670"
+    },
+    {
+      "indice": 13,
+      "marca_tiempo": "2026-11-17T02:08:26+00:00",
+      "datos": {
+        "tipo": "metricas",
+        "nombre": "metricas_modelos.json",
+        "hash_documento": "425645878999e1eed9446a55f04532cf696c5c40cb6b2f6eb750c11cb102a296",
+        "metadatos": {
+          "tamano_bytes": 4532
+        }
+      },
+      "hash_anterior": "00008dae3db4af3e27a038883fcf62a19d37f2d76e68a1715d559296b4d6e670",
+      "nonce": 130455,
+      "hash": "000050ae5fa96b52fe9b5cc515fa502c92ca4aabbe947610c8bd8b5eb94ad6c4"
+    },
+    {
+      "indice": 14,
+      "marca_tiempo": "2026-11-17T02:08:30+00:00",
+      "datos": {
+        "tipo": "reporte",
+        "nombre": "reporte_20261116_200830.json",
+        "hash_documento": "8433f56cc075ddfe5dbfb6b4804bb906d567c4106a8abcc2635786cf4feb647d",
+        "metadatos": {
+          "tamano_bytes": 16930,
+          "modelo": "Random Forest",
+          "r2": 0.9948,
+          "n_registros": 42000,
+          "archivo_txt": "reporte_20261116_200830.txt"
+        }
+      },
+      "hash_anterior": "000050ae5fa96b52fe9b5cc515fa502c92ca4aabbe947610c8bd8b5eb94ad6c4",
+      "nonce": 27869,
+      "hash": "0000073bc12cdb88b270303cbc977fc35adde9d2a90c550370b07a1507e4698b"
+    },
+    {
+      "indice": 15,
+      "marca_tiempo": "2026-11-19T14:34:59+00:00",
+      "datos": {
+        "tipo": "reporte",
+        "nombre": "reporte_20261119_083459.json",
+        "hash_documento": "c4d0d2b8fd6d80aa1f00fdb95f40fb5e156e74c6bac440c92effa7c05eb53947",
+        "metadatos": {
+          "tamano_bytes": 16930,
+          "modelo": "Random Forest",
+          "r2": 0.9948,
+          "n_registros": 42000,
+          "archivo_txt": "reporte_20261119_083459.txt"
+        }
+      },
+      "hash_anterior": "0000073bc12cdb88b270303cbc977fc35adde9d2a90c550370b07a1507e4698b",
+      "nonce": 228146,
+      "hash": "00002a867908d77bc5af78d0becadd2d6af8f3b71fd0432bd2ec5c9004827d97"
+    },
+    {
+      "indice": 16,
+      "marca_tiempo": "2026-11-19T16:32:50+00:00",
+      "datos": {
+        "tipo": "prediccion",
+        "nombre": "prediccion_RES-001_2026-07-02_130000",
+        "hash_documento": "2f510f0c51eb8e76169f40b0bb2d19d56462d99a0b5a7ef8aa92d5dfc1ac576f",
+        "metadatos": {
+          "prediccion_kwh": 1.169,
+          "intervalo": [
+            1.07,
+            1.254
+          ],
+          "modelo": "Random Forest"
+        }
+      },
+      "hash_anterior": "00002a867908d77bc5af78d0becadd2d6af8f3b71fd0432bd2ec5c9004827d97",
+      "nonce": 10810,
+      "hash": "0000ec11490a928bfd7fdae5bbdafa13edd13dbc683afaa0ef89060c2cd72f09"
+    },
+    {
+      "indice": 17,
+      "marca_tiempo": "2026-11-24T13:58:31+00:00",
+      "datos": {
+        "tipo": "reporte",
+        "nombre": "reporte_20261124_075831.json",
+        "hash_documento": "396295b8be9d4188448c1a47e0ba18dbc10b12b9719b50677152e69710784537",
+        "metadatos": {
+          "tamano_bytes": 16930,
+          "modelo": "Random Forest",
+          "r2": 0.9948,
+          "n_registros": 42000,
+          "archivo_txt": "reporte_20261124_075831.txt"
+        }
+      },
+      "hash_anterior": "0000ec11490a928bfd7fdae5bbdafa13edd13dbc683afaa0ef89060c2cd72f09",
+      "nonce": 12958,
+      "hash": "0000c85ae5313b8ca511f171fdbc465124aac97a072c2ecf94dbcd6f0180f097"
     }
   ]
 }

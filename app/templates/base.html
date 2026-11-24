@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block titulo %}SIAPE{% endblock %} · SIAPE</title>
+  <title>{% block titulo %}SIAPE{% endblock %} - SIAPE</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
 </head>
 <body>
@@ -23,7 +23,7 @@
   {% block contenido %}{% endblock %}
 </main>
 <footer class="pie">
-  SIAPE · Sistema Inteligente de Análisis, Predicción y trazabilidad Energética · Proyecto de IA en la ciencia de datos, ITV (TecNM) · {{ anio }}
+  SIAPE - Sistema Inteligente de Análisis, Predicción y trazabilidad Energética - Tecnológico Nacional de México Campus Veracruz {{ anio }}
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" onerror="window.sinChartJs = true"></script>
 <script src="{{ url_for('static', filename='siape.js') }}"></script>

@@ -1,0 +1,601 @@
+{
+  "titulo": "Reporte automático SIAPE - análisis y predicción de consumo energético",
+  "fecha_generacion": "2026-11-24 07:58:31",
+  "datos": {
+    "n_registros": 42000,
+    "n_instalaciones": 10,
+    "periodo": {
+      "inicio": "2026-01-08 00:00:00",
+      "fin": "2026-07-01 23:00:00"
+    },
+    "consumo_total_kwh": 990833.26,
+    "consumo_por_tipo": {
+      "industrial": 641606.29,
+      "educativa": 209008.26,
+      "comercial": 126587.66,
+      "residencial": 13631.04
+    },
+    "ultima_fecha": "2026-07-01"
+  },
+  "modelo": {
+    "nombre": "Random Forest",
+    "r2": 0.9947713927631954,
+    "mae": 1.2202004324608455,
+    "rmse": 2.4927217067315848,
+    "mape": 6.292390500197395,
+    "rmse_cv": 2.496674537520751,
+    "criterio_seleccion": "menor rmse_cv (validación cruzada temporal, TimeSeriesSplit 3)",
+    "cobertura_intervalo_90": 0.777116704805492,
+    "hiperparametros": {
+      "max_depth": 14,
+      "max_features": 1.0,
+      "min_samples_leaf": 3,
+      "n_estimators": 180
+    },
+    "metricas_por_tipo": {
+      "residencial": {
+        "mae": 0.09490617848970252,
+        "r2": 0.9545340630465292,
+        "rmse": 0.15440130185244547,
+        "mape": 7.740209565366129
+      },
+      "comercial": {
+        "mae": 0.6099492753623189,
+        "r2": 0.9881283990884494,
+        "rmse": 0.9901230927258724,
+        "mape": 6.190100272666803
+      },
+      "industrial": {
+        "mae": 3.315386727688787,
+        "r2": 0.9744575849684363,
+        "rmse": 4.416430247432284,
+        "mape": 4.099305603489297
+      },
+      "educativa": {
+        "mae": 1.728325514874142,
+        "r2": 0.9842847881473444,
+        "rmse": 3.171324367379504,
+        "mape": 6.46686397922515
+      }
+    },
+    "linea_base_24h": {
+      "mae": 6.169787986270023,
+      "rmse": 14.57219812507547,
+      "r2": 0.8213148079815061,
+      "mape": 28.682852098070814,
+      "rmse_cv": null,
+      "tiempo_s": 0.0,
+      "tiempo_busqueda_s": 0.0
+    },
+    "importancias_top": {
+      "consumo_lag_1h": 0.9585,
+      "consumo_lag_168h": 0.0244,
+      "hora_sin": 0.005,
+      "hora": 0.0038,
+      "hora_cos": 0.0024,
+      "consumo_lag_24h": 0.0022,
+      "consumo_media_movil_24h": 0.0007,
+      "temperatura_c": 0.0005
+    },
+    "n_entrenamiento": 33260,
+    "n_prueba": 8740
+  },
+  "predicciones": [
+    {
+      "id_instalacion": "RES-001",
+      "tipo": "residencial",
+      "fecha": "2026-07-02",
+      "fecha_hora": "2026-07-02 20:00:00",
+      "prediccion_kwh": 2.593,
+      "intervalo": [
+        2.214,
+        3.145
+      ],
+      "total_24h_kwh": 30.965,
+      "pico_kwh": 2.593,
+      "hora_pico": "20:00",
+      "minimo_kwh": 0.48,
+      "horas": [
+        {
+          "hora": 0,
+          "kwh": 0.581,
+          "intervalo": [
+            0.539,
+            0.632
+          ]
+        },
+        {
+          "hora": 1,
+          "kwh": 0.509,
+          "intervalo": [
+            0.486,
+            0.531
+          ]
+        },
+        {
+          "hora": 2,
+          "kwh": 0.501,
+          "intervalo": [
+            0.479,
+            0.517
+          ]
+        },
+        {
+          "hora": 3,
+          "kwh": 0.482,
+          "intervalo": [
+            0.46,
+            0.506
+          ]
+        },
+        {
+          "hora": 4,
+          "kwh": 0.48,
+          "intervalo": [
+            0.462,
+            0.511
+          ]
+        },
+        {
+          "hora": 5,
+          "kwh": 0.693,
+          "intervalo": [
+            0.637,
+            0.766
+          ]
+        },
+        {
+          "hora": 6,
+          "kwh": 1.058,
+          "intervalo": [
+            0.631,
+            1.249
+          ]
+        },
+        {
+          "hora": 7,
+          "kwh": 1.528,
+          "intervalo": [
+            1.187,
+            1.727
+          ]
+        },
+        {
+          "hora": 8,
+          "kwh": 1.372,
+          "intervalo": [
+            1.135,
+            1.626
+          ]
+        },
+        {
+          "hora": 9,
+          "kwh": 1.246,
+          "intervalo": [
+            1.022,
+            1.381
+          ]
+        },
+        {
+          "hora": 10,
+          "kwh": 1.233,
+          "intervalo": [
+            1.095,
+            1.362
+          ]
+        },
+        {
+          "hora": 11,
+          "kwh": 1.241,
+          "intervalo": [
+            1.103,
+            1.374
+          ]
+        },
+        {
+          "hora": 12,
+          "kwh": 1.285,
+          "intervalo": [
+            1.154,
+            1.399
+          ]
+        },
+        {
+          "hora": 13,
+          "kwh": 1.385,
+          "intervalo": [
+            1.277,
+            1.54
+          ]
+        },
+        {
+          "hora": 14,
+          "kwh": 1.397,
+          "intervalo": [
+            1.313,
+            1.54
+          ]
+        },
+        {
+          "hora": 15,
+          "kwh": 1.37,
+          "intervalo": [
+            1.274,
+            1.46
+          ]
+        },
+        {
+          "hora": 16,
+          "kwh": 1.389,
+          "intervalo": [
+            1.301,
+            1.54
+          ]
+        },
+        {
+          "hora": 17,
+          "kwh": 1.474,
+          "intervalo": [
+            1.369,
+            1.59
+          ]
+        },
+        {
+          "hora": 18,
+          "kwh": 1.775,
+          "intervalo": [
+            1.533,
+            2.05
+          ]
+        },
+        {
+          "hora": 19,
+          "kwh": 2.143,
+          "intervalo": [
+            1.895,
+            2.466
+          ]
+        },
+        {
+          "hora": 20,
+          "kwh": 2.593,
+          "intervalo": [
+            2.214,
+            3.145
+          ]
+        },
+        {
+          "hora": 21,
+          "kwh": 2.215,
+          "intervalo": [
+            1.924,
+            2.495
+          ]
+        },
+        {
+          "hora": 22,
+          "kwh": 1.829,
+          "intervalo": [
+            1.471,
+            2.056
+          ]
+        },
+        {
+          "hora": 23,
+          "kwh": 1.186,
+          "intervalo": [
+            0.903,
+            1.38
+          ]
+        }
+      ]
+    },
+    {
+      "id_instalacion": "IND-001",
+      "tipo": "industrial",
+      "fecha": "2026-07-02",
+      "fecha_hora": "2026-07-02 12:00:00",
+      "prediccion_kwh": 119.616,
+      "intervalo": [
+        111.937,
+        125.554
+      ],
+      "total_24h_kwh": 2447.915,
+      "pico_kwh": 119.616,
+      "hora_pico": "12:00",
+      "minimo_kwh": 70.296,
+      "horas": [
+        {
+          "hora": 0,
+          "kwh": 74.306,
+          "intervalo": [
+            67.369,
+            81.89
+          ]
+        },
+        {
+          "hora": 1,
+          "kwh": 72.36,
+          "intervalo": [
+            66.336,
+            76.219
+          ]
+        },
+        {
+          "hora": 2,
+          "kwh": 71.798,
+          "intervalo": [
+            66.359,
+            75.896
+          ]
+        },
+        {
+          "hora": 3,
+          "kwh": 72.433,
+          "intervalo": [
+            66.82,
+            76.251
+          ]
+        },
+        {
+          "hora": 4,
+          "kwh": 73.572,
+          "intervalo": [
+            67.561,
+            77.688
+          ]
+        },
+        {
+          "hora": 5,
+          "kwh": 83.615,
+          "intervalo": [
+            76.71,
+            86.996
+          ]
+        },
+        {
+          "hora": 6,
+          "kwh": 113.296,
+          "intervalo": [
+            106.3,
+            120.544
+          ]
+        },
+        {
+          "hora": 7,
+          "kwh": 113.401,
+          "intervalo": [
+            105.586,
+            119.711
+          ]
+        },
+        {
+          "hora": 8,
+          "kwh": 115.333,
+          "intervalo": [
+            108.353,
+            120.181
+          ]
+        },
+        {
+          "hora": 9,
+          "kwh": 118.747,
+          "intervalo": [
+            111.247,
+            125.39
+          ]
+        },
+        {
+          "hora": 10,
+          "kwh": 119.248,
+          "intervalo": [
+            111.932,
+            125.602
+          ]
+        },
+        {
+          "hora": 11,
+          "kwh": 119.077,
+          "intervalo": [
+            111.686,
+            125.473
+          ]
+        },
+        {
+          "hora": 12,
+          "kwh": 119.616,
+          "intervalo": [
+            111.937,
+            125.554
+          ]
+        },
+        {
+          "hora": 13,
+          "kwh": 118.93,
+          "intervalo": [
+            112.126,
+            125.017
+          ]
+        },
+        {
+          "hora": 14,
+          "kwh": 113.745,
+          "intervalo": [
+            105.717,
+            123.081
+          ]
+        },
+        {
+          "hora": 15,
+          "kwh": 114.389,
+          "intervalo": [
+            106.052,
+            121.758
+          ]
+        },
+        {
+          "hora": 16,
+          "kwh": 114.733,
+          "intervalo": [
+            106.827,
+            121.831
+          ]
+        },
+        {
+          "hora": 17,
+          "kwh": 115.466,
+          "intervalo": [
+            107.78,
+            121.87
+          ]
+        },
+        {
+          "hora": 18,
+          "kwh": 115.4,
+          "intervalo": [
+            107.926,
+            122.167
+          ]
+        },
+        {
+          "hora": 19,
+          "kwh": 115.187,
+          "intervalo": [
+            107.926,
+            121.847
+          ]
+        },
+        {
+          "hora": 20,
+          "kwh": 113.687,
+          "intervalo": [
+            106.677,
+            120.487
+          ]
+        },
+        {
+          "hora": 21,
+          "kwh": 110.515,
+          "intervalo": [
+            104.77,
+            118.748
+          ]
+        },
+        {
+          "hora": 22,
+          "kwh": 78.765,
+          "intervalo": [
+            75.113,
+            82.912
+          ]
+        },
+        {
+          "hora": 23,
+          "kwh": 70.296,
+          "intervalo": [
+            66.071,
+            74.286
+          ]
+        }
+      ]
+    }
+  ],
+  "clusters": {
+    "k": 6,
+    "silhouette": 0.6623778206748044,
+    "tamanos": {
+      "0": 224,
+      "1": 350,
+      "2": 525,
+      "3": 358,
+      "4": 167,
+      "5": 126
+    },
+    "descripciones": {
+      "0": "224 días; tipo dominante: educativa (100 %); hora pico: 13:00; con pico marcado",
+      "1": "350 días; tipo dominante: industrial (100 %); hora pico: 13:00; con pico marcado",
+      "2": "525 días; tipo dominante: comercial (100 %); hora pico: 13:00; con pico marcado",
+      "3": "358 días; tipo dominante: residencial (100 %); hora pico: 20:00; con pico marcado",
+      "4": "167 días; tipo dominante: residencial (100 %); hora pico: 20:00; con pico marcado",
+      "5": "126 días; tipo dominante: educativa (100 %); hora pico: 16:00; curva casi plana (sin pico marcado: operación continua o cerrado)"
+    },
+    "dias_atipicos": [
+      {
+        "id_instalacion": "RES-001",
+        "tipo": "residencial",
+        "fecha": "2026-06-16",
+        "cluster": 4,
+        "distancia": 0.9228,
+        "consumo_medio_kwh": 1.399
+      },
+      {
+        "id_instalacion": "RES-002",
+        "tipo": "residencial",
+        "fecha": "2026-05-20",
+        "cluster": 4,
+        "distancia": 0.8983,
+        "consumo_medio_kwh": 1.873
+      },
+      {
+        "id_instalacion": "RES-001",
+        "tipo": "residencial",
+        "fecha": "2026-06-14",
+        "cluster": 4,
+        "distancia": 0.7914,
+        "consumo_medio_kwh": 1.521
+      },
+      {
+        "id_instalacion": "RES-002",
+        "tipo": "residencial",
+        "fecha": "2026-05-22",
+        "cluster": 3,
+        "distancia": 0.7101,
+        "consumo_medio_kwh": 1.732
+      },
+      {
+        "id_instalacion": "EDU-001",
+        "tipo": "educativa",
+        "fecha": "2026-03-19",
+        "cluster": 0,
+        "distancia": 0.6923,
+        "consumo_medio_kwh": 42.215
+      }
+    ],
+    "n_dias_atipicos": 20
+  },
+  "pnl": {
+    "n_reportes": 4000,
+    "distribucion_sentimiento": {
+      "negativo": 1539,
+      "positivo": 1349,
+      "neutral": 1112
+    },
+    "entidades_top": {
+      "CFE": 559,
+      "Veracruz": 473,
+      "Boca del Río": 341,
+      "Xalapa": 315,
+      "Comisión Federal de Electricidad": 258,
+      "Córdoba": 185,
+      "Orizaba": 184,
+      "Coatzacoalcos": 171,
+      "PROFECO": 137,
+      "CENACE": 67
+    },
+    "dispositivos_top": {
+      "medidor": 237,
+      "aire acondicionado": 200,
+      "ventilador": 188,
+      "minisplit": 179,
+      "luminarias": 170,
+      "horno": 161,
+      "inversor": 127,
+      "refrigerador": 118,
+      "servidor": 106,
+      "elevador": 104
+    },
+    "modelo": "SVM lineal",
+    "f1_macro": 0.9377
+  },
+  "texto_nlg": "Este reporte automático resume el análisis de 42,000 registros horarios de consumo eléctrico correspondientes a 10 instalaciones, durante el periodo 2026-01-08 00:00:00 a 2026-07-01 23:00:00. En conjunto, el consumo acumulado fue de 990.8 MWh (990,833 kWh), lo que equivale a un promedio de 23.59 kWh por registro horario. Por tipo de instalación, el mayor consumo corresponde al sector industrial (64.8 % del total), seguido de educativa (21.1 %) y comercial (12.8 %). Esta concentración sugiere que las acciones de eficiencia en el sector industrial tendrán el mayor impacto global.\n\nPara anticipar la demanda se entrenó un modelo de regresión supervisada (Random Forest), que alcanzó un coeficiente de determinación R² de 0.995; se trata de un ajuste excelente, ya que explica casi toda la variabilidad del consumo. En el conjunto de prueba se observó un error absoluto medio (MAE) de 1.22 kWh y una raíz del error cuadrático medio (RMSE) de 2.49 kWh.\n\nComo ejemplo de uso, el modelo estima un consumo de 2.59 kWh para la instalación RES-001 el 2026-07-02 20:00:00. El intervalo de predicción va de 2.21 a 3.15 kWh; al ser amplio, refleja una incertidumbre considerable en esa hora. El consumo proyectado para las próximas 24 horas es de 30.96 kWh. El pico de demanda previsto es de 2.59 kWh (hora 20:00).\n\nPara una instalación de mayor tamaño, el modelo estima un consumo de 119.62 kWh para la instalación IND-001 el 2026-07-02 12:00:00. El intervalo de predicción va de 111.94 a 125.55 kWh; al ser estrecho, indica una estimación estable. El consumo proyectado para las próximas 24 horas es de 2,447.91 kWh. El pico de demanda previsto es de 119.62 kWh (hora 12:00).\n\nNota sobre el rango de predicción: es el rango entre los percentiles 5 y 95 de las predicciones de los árboles del Random Forest; en la prueba contuvo el valor real el 77.7 % de las veces, por lo que debe leerse como un rango orientativo y no como un intervalo de confianza del 90 %.\n\nCon técnicas de aprendizaje no supervisado (K-Means) se identificaron 6 perfiles típicos de consumo diario, con un coeficiente de silhouette de 0.662, lo que indica una separación clara entre los grupos. Además, se señalaron 20 días atípicos que conviene revisar por posibles fallas o usos anómalos.\n\nEl análisis de lenguaje natural procesó 4,000 reportes de usuarios: 38.5 % son negativos, 33.7 % positivos y 27.8 % neutrales. El nivel de insatisfacción es moderado; aunque no rebasa el umbral de alerta (40 %), conviene dar seguimiento a las quejas recurrentes. Los equipos más mencionados fueron medidor (237), aire acondicionado (200), ventilador (188) y minisplit (179). Entre las entidades más frecuentes destacan CFE (559), Veracruz (473), Boca del Río (341) y Xalapa (315).\n\nCon base en los equipos que más aparecen en los reportes, se recomienda: en medidor, calibrar o sustituir medidores con lecturas dudosas y considerar medición inteligente para detectar errores de facturación; en aire acondicionado, ajustar los termostatos a 24-25 °C, dar mantenimiento a filtros y programar apagado automático fuera de horario; en ventilador, limpiar aspas, revisar rodamientos y regular la velocidad según la ocupación. Asimismo, se sugiere enfocar las auditorías energéticas primero en el sector industrial, que concentra la mayor demanda. Dado que el modelo predictivo es confiable, puede emplearse para programar mantenimientos y desplazar cargas a horarios de menor demanda.\n\nLos resultados y predicciones de este reporte pueden registrarse en la cadena de bloques para garantizar su integridad: cualquier alteración posterior modificaría su huella SHA-256 y sería detectada en la verificación."
+}

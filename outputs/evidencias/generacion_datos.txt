@@ -1,8 +1,8 @@
 EVIDENCIA - GENERACIÓN DE DATOS DE CONSUMO (SIAPE)
-Fecha de ejecución: 2026-11-14 21:25:31
+Fecha de ejecución: 2026-11-16 20:07:33
 Semilla: 42
 Periodo: 2026-01-01 00:00:00 + 182 días (frecuencia horaria)
-Instalaciones: 10  |  Archivo: /home/claude/ICD/data/raw/consumo_energetico_raw.csv
+Instalaciones: 10  |  Archivo: C:\Users\Aaron\Cursos\ICD\data\raw\consumo_energetico_raw.csv
 
 Conteos de problemas inyectados a propósito:
   - filas_simuladas: 43680

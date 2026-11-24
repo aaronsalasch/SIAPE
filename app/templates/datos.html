@@ -2,12 +2,12 @@
 {% block titulo %}Datos{% endblock %}
 {% block contenido %}
 <h1>Datos de consumo</h1>
-<p class="lead">Aquí se ve con qué información trabaja el sistema y qué problemas tenían los datos originales antes de limpiarlos.</p>
+<p class="lead">Información de entrada del sistema y problemas de los datos originales antes de la limpieza.</p>
 
 <section class="kpis">
-  <div class="kpi"><span class="kpi-n">{{ tam.filas_raw|num }}</span><span class="kpi-t">filas originales (con errores)</span></div>
-  <div class="kpi"><span class="kpi-n">{{ tam.filas_proc|num }}</span><span class="kpi-t">filas ya limpias</span></div>
-  <div class="kpi"><span class="kpi-n">{{ tam.columnas_proc }}</span><span class="kpi-t">columnas (incluye variables creadas)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ tam.filas_raw|num }}</span><span class="kpi-t">registros originales (con errores)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ tam.filas_proc|num }}</span><span class="kpi-t">registro limpios (sin errores)</span></div>
+  <div class="kpi"><span class="kpi-n">{{ tam.columnas_proc }}</span><span class="kpi-t">columnas totales (originales + creadas)</span></div>
   <div class="kpi"><span class="kpi-n">{{ tam.reportes|num }}</span><span class="kpi-t">reportes de texto de usuarios</span></div>
 </section>
 
@@ -32,14 +32,14 @@
       </tbody>
     </table>
     <ul class="lista">
-      <li><strong>{{ prep.duplicados_eliminados|num }}</strong> filas duplicadas eliminadas.</li>
+      <li><strong>{{ prep.duplicados_eliminados|num }}</strong> registros duplicados eliminados.</li>
       <li><strong>{{ prep.atipicos.total_detectados|num }}</strong> valores atípicos detectados: {{ prep.atipicos.temperatura_fuera_de_rango }} temperaturas imposibles, {{ prep.atipicos.consumo_negativo }} consumos negativos y {{ prep.atipicos.consumo_pico_iqr }} picos extremos. Se marcaron como vacíos y se estimaron.</li>
-      <li>Vacíos rellenados con: {{ prep.estrategia_nulos }}.</li>
-      <li>{{ prep.filas_descartadas_sin_historia|num }} filas del inicio se descartaron porque no tenían una semana de historia para calcular el consumo anterior.</li>
+      <li>Vacíos : {{ prep.estrategia_nulos }}.</li>
+      <li>Los primeros <strong>{{ prep.filas_descartadas_sin_historia|num }}</strong> registros se descartaron porque no tenían una semana de historia para calcular el consumo anterior.</li>
     </ul>
   </div>
   <div class="tarjeta">
-    <h2>Qué se hizo con los datos</h2>
+    <h2>Proceso de limpieza de datos</h2>
     <ul class="lista">{% for t in prep.transformaciones %}<li>{{ t }}</li>{% endfor %}</ul>
     <h3>Variables nuevas</h3>
     <p>{% for v in prep.variables_creadas %}<span class="chip">{{ v }}</span> {% endfor %}</p>
@@ -50,7 +50,7 @@
 
 {% if corr %}
 <section class="tarjeta">
-  <h2>Variables más relacionadas con el consumo relativo</h2>
+  <h2>Variables más relacionadas con el consumo relativo (kWh)</h2>
   <div class="barras">
     {% for v, r in corr %}
     <div class="barra-fila"><span class="barra-etq">{{ v }}</span>

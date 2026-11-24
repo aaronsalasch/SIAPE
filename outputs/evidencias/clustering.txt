@@ -1,5 +1,5 @@
 EVIDENCIA - CLUSTERING DE PERFILES DIARIOS (K-MEANS, SIAPE)
-Fecha de ejecución: 2026-11-14 21:27:13  |  Semilla: 42
+Fecha de ejecución: 2026-11-19 06:04:11  |  Semilla: 42
 Perfiles instalación-día completos (24 h): 1750  |  Vector: 24 horas / promedio del día
 
   k     inercia  silhouette
@@ -51,5 +51,5 @@ RES-002     2026-06-13         4      0.547       2.08
 RES-002     2026-05-07         3      0.546       1.69
 RES-001     2026-06-11         3      0.543       1.12
 
-Modelo: /home/claude/ICD/models/kmeans_perfiles.joblib
-Resumen: /home/claude/ICD/models/clusters_resumen.json
+Modelo: C:\Users\Aaron\Cursos\ICD\models\kmeans_perfiles.joblib
+Resumen: C:\Users\Aaron\Cursos\ICD\models\clusters_resumen.json

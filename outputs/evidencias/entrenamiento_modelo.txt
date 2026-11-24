@@ -1,16 +1,16 @@
 EVIDENCIA - ENTRENAMIENTO DE MODELOS DE CONSUMO (SIAPE)
-Fecha de ejecución: 2026-11-14 21:25:35  |  Semilla: 42
+Fecha de ejecución: 2026-11-19 06:03:32  |  Semilla: 42
 Entrenamiento: 33260 filas (2026-01-08 00:00:00 a 2026-05-26 13:00:00)
 Prueba: 8740 filas (2026-05-26 14:00:00 a 2026-07-01 23:00:00)
 Características (21): hora, dia_semana_num, mes, dia_anio, es_fin_semana, es_festivo, hora_sin, hora_cos, mes_sin, mes_cos, temperatura_c, humedad_pct, temp_x_hora_pico, superficie_m2, num_ocupantes, consumo_lag_1h, consumo_lag_24h, consumo_lag_168h, consumo_media_movil_24h, tipo_instalacion, ciudad
 Validación cruzada: TimeSeriesSplit(3 cortes, ventana creciente); métrica rmse_cv = RMSE promedio
 
 Modelo                        MAE     RMSE       R2   MAPE %   rmse_cv   fit s  búsq. s
-Regresión Lineal            2.519    4.434   0.9835    53.72     4.465     0.0      0.2
-Árbol de Decisión           1.498    2.948   0.9927     8.78     3.024     0.3      2.8
-KNN                         2.039    3.945   0.9869    13.26     5.515     0.0      3.0
-Random Forest               1.220    2.493   0.9948     6.29     2.497    18.8     62.9
-SVR (muestra)               8.034   10.717   0.9034   338.53    12.422     1.9      1.9
+Regresión Lineal            2.519    4.434   0.9835    53.72     4.465     0.1      0.3
+Árbol de Decisión           1.498    2.948   0.9927     8.78     3.024     0.3      3.0
+KNN                         2.039    3.945   0.9869    13.26     5.515     0.1      1.9
+Random Forest               1.220    2.493   0.9948     6.29     2.497     4.6     17.7
+SVR (muestra)               8.034   10.717   0.9034   338.53    12.422     1.6      2.0
 Línea base (hace 24 h)      6.170   14.572   0.8213    28.68         -     0.0      0.0
 
 Hiperparámetros elegidos por búsqueda (GridSearchCV + TimeSeriesSplit):
@@ -58,7 +58,7 @@ Intervalo de percentiles 5-95 de los árboles: cobertura empírica en prueba = 7
 
 Anti-fuga: lags calculados solo con valores pasados (preparar_datos.py); división temporal;
 escalado y OneHot dentro del Pipeline; selección del modelo con validación cruzada temporal.
-Modelo guardado en: /home/claude/ICD/models/modelo_consumo.joblib
-Métricas en: /home/claude/ICD/models/metricas_modelos.json
-Predicciones de prueba: /home/claude/ICD/outputs/predicciones_test.csv
-Tiempo total de ejecución: 98 s
+Modelo guardado en: C:\Users\Aaron\Cursos\ICD\models\modelo_consumo.joblib
+Métricas en: C:\Users\Aaron\Cursos\ICD\models\metricas_modelos.json
+Predicciones de prueba: C:\Users\Aaron\Cursos\ICD\outputs\predicciones_test.csv
+Tiempo total de ejecución: 41 s

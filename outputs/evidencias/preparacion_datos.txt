@@ -1,6 +1,6 @@
 EVIDENCIA - PREPARACIÓN DE DATOS DE CONSUMO (SIAPE)
-Fecha de ejecución: 2026-11-14 21:25:32
-Entrada: /home/claude/ICD/data/raw/consumo_energetico_raw.csv  (44117 filas, 12 columnas)
+Fecha de ejecución: 2026-11-16 20:07:33
+Entrada: C:\Users\Aaron\Cursos\ICD\data\raw\consumo_energetico_raw.csv  (44117 filas, 12 columnas)
 
 1) NULOS ANTES DE LA LIMPIEZA (por columna)
    temperatura_c        885  (2.01 %)
@@ -67,7 +67,7 @@ Entrada: /home/claude/ICD/data/raw/consumo_energetico_raw.csv  (44117 filas, 12 
    mes                          0.025
    mes_cos                     -0.024
    mes_sin                     -0.016
-   superficie_m2                0.000
+   superficie_m2               -0.000
    num_ocupantes               -0.000
    Pares muy correlacionados (|r| > 0.95): mes~dia_anio (0.98), mes~mes_cos (1.00), dia_anio~mes_cos (0.98)
    Decisión: se conservan todas (los modelos de árboles toleran redundancia; la
@@ -75,5 +75,5 @@ Entrada: /home/claude/ICD/data/raw/consumo_energetico_raw.csv  (44117 filas, 12 
    Categóricas (tipo_instalacion, ciudad) se codifican con OneHotEncoder dentro del Pipeline.
    Escalado: StandardScaler dentro del Pipeline (numéricas), ajustado solo con entrenamiento.
 
-Salida: /home/claude/ICD/data/processed/consumo_energetico_procesado.csv  (42000 filas, 27 columnas)
+Salida: C:\Users\Aaron\Cursos\ICD\data\processed\consumo_energetico_procesado.csv  (42000 filas, 27 columnas)
 Nulos totales en el procesado: 0

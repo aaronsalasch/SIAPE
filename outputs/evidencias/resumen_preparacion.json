@@ -1,5 +1,5 @@
 {
-  "fecha_ejecucion": "2026-11-14 21:25:32",
+  "fecha_ejecucion": "2026-11-16 20:07:33",
   "filas_raw": 44117,
   "duplicados_eliminados": 437,
   "atipicos": {
@@ -34,13 +34,13 @@
   "filas_descartadas_sin_historia": 1680,
   "transformaciones": [
     "strip+minúsculas en texto",
-    "día de la semana recalculado desde la fecha",
-    "eliminación de duplicados",
-    "atípicos -> NaN (reglas físicas + IQR)",
-    "interpolación temporal por instalación",
-    "variables de calendario y cíclicas",
-    "lags 1/24/168 h y media móvil 24 h (solo pasado)",
-    "división temporal"
+    "Día de la semana recalculado desde la fecha",
+    "Eliminación de duplicados",
+    "Atípicos -> NaN (reglas físicas + IQR)",
+    "Interpolación temporal por instalación",
+    "Variables de calendario y cíclicas",
+    "Lags 1/24/168 h y media móvil 24 h (solo pasado)",
+    "División temporal"
   ],
   "variables_creadas": [
     "hora",
@@ -82,7 +82,7 @@
     "mes": 0.0255,
     "mes_cos": -0.024,
     "mes_sin": -0.0157,
-    "superficie_m2": 0.0,
+    "superficie_m2": -0.0,
     "num_ocupantes": -0.0
   },
   "pares_muy_correlacionados": [

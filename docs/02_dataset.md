@@ -18,7 +18,7 @@ No se dispone de mediciones reales de instalaciones eléctricas ni de reportes r
 - Reproducibilidad total: todo el azar usa `numpy.random.default_rng(config.SEMILLA)` (consumo) y `random` con la misma semilla 42 (reportes).
 - Cumplir el requisito de más de 5,000 registros.
 
-Por ser sintéticos, **no representan consumo real** y las métricas deben leerse con esa reserva.
+**Ni los datos ni las métricas representan consumos reales**
 
 ### 1.2 Procedimiento de generación del consumo (`src/data/generar_datos.py`)
 

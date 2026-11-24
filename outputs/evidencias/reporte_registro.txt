@@ -1,26 +1,21 @@
 EVIDENCIA - GENERACIÓN Y REGISTRO DEL REPORTE EN LA BLOCKCHAIN
 ========================================================================
-Fecha: 2026-11-14 21:27:26
-Reporte JSON      : reporte_20261114_212726.json
-Reporte TXT       : reporte_20261114_212726.txt
-SHA-256 (archivo) : 6cbfa9ba31a5c1df0a88e43291a719a91c6eb1389bae536ec685e86938c4cc6b
-Bloque registrado : #4 (tipo=reporte)
-Hash del bloque   : 00005b31c151271cb5bfcc9dc835a36982b2926b61b8b6556337d381309579be
-Hash anterior     : 0000c6b3c86b53c8f8f95e51799940d813f48102de9be5fed777772fc31a87b7
-Nonce (PoW)       : 63657
-Marca de tiempo   : 2026-11-14T21:27:26+00:00
-Validación cadena : VÁLIDA (5 bloques, 0 errores)
+Fecha: 2026-11-24 07:58:31
+Reporte JSON      : reporte_20261124_075831.json
+Reporte TXT       : reporte_20261124_075831.txt
+SHA-256 (archivo) : 396295b8be9d4188448c1a47e0ba18dbc10b12b9719b50677152e69710784537
+Bloque registrado : #17 (tipo=reporte)
+Hash del bloque   : 0000c85ae5313b8ca511f171fdbc465124aac97a072c2ecf94dbcd6f0180f097
+Hash anterior     : 0000ec11490a928bfd7fdae5bbdafa13edd13dbc683afaa0ef89060c2cd72f09
+Nonce (PoW)       : 12958
+Marca de tiempo   : 2026-11-24T13:58:31+00:00
+Validación cadena : VÁLIDA (18 bloques, 0 errores)
 
 Cómo verificarlo: python pipeline.py --verificar   (recalcula el SHA-256 y lo compara con el bloque)
 
 ------------------------------------------------------------------------
 TEXTO GENERADO (NLG)
 ------------------------------------------------------------------------
-========================================================================
-REPORTE AUTOMÁTICO SIAPE - ANÁLISIS Y PREDICCIÓN DE CONSUMO ENERGÉTICO
-Generado: 2026-11-14 21:27:26
-Periodo analizado: 2026-01-08 00:00:00 a 2026-07-01 23:00:00
-========================================================================
 Este reporte automático resume el análisis de 42,000 registros horarios de consumo eléctrico correspondientes a 10 instalaciones, durante el periodo 2026-01-08 00:00:00 a 2026-07-01 23:00:00. En conjunto, el consumo acumulado fue de 990.8 MWh (990,833 kWh), lo que equivale a un promedio de 23.59 kWh por registro horario. Por tipo de instalación, el mayor consumo corresponde al sector industrial (64.8 % del total), seguido de educativa (21.1 %) y comercial (12.8 %). Esta concentración sugiere que las acciones de eficiencia en el sector industrial tendrán el mayor impacto global.
 
 Para anticipar la demanda se entrenó un modelo de regresión supervisada (Random Forest), que alcanzó un coeficiente de determinación R² de 0.995; se trata de un ajuste excelente, ya que explica casi toda la variabilidad del consumo. En el conjunto de prueba se observó un error absoluto medio (MAE) de 1.22 kWh y una raíz del error cuadrático medio (RMSE) de 2.49 kWh.

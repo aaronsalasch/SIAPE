@@ -1,0 +1,22 @@
+========================================================================
+REPORTE AUTOMÁTICO SIAPE - ANÁLISIS Y PREDICCIÓN DE CONSUMO ENERGÉTICO
+Generado: 2026-11-24 07:58:31
+Periodo analizado: 2026-01-08 00:00:00 a 2026-07-01 23:00:00
+========================================================================
+Este reporte automático resume el análisis de 42,000 registros horarios de consumo eléctrico correspondientes a 10 instalaciones, durante el periodo 2026-01-08 00:00:00 a 2026-07-01 23:00:00. En conjunto, el consumo acumulado fue de 990.8 MWh (990,833 kWh), lo que equivale a un promedio de 23.59 kWh por registro horario. Por tipo de instalación, el mayor consumo corresponde al sector industrial (64.8 % del total), seguido de educativa (21.1 %) y comercial (12.8 %). Esta concentración sugiere que las acciones de eficiencia en el sector industrial tendrán el mayor impacto global.
+
+Para anticipar la demanda se entrenó un modelo de regresión supervisada (Random Forest), que alcanzó un coeficiente de determinación R² de 0.995; se trata de un ajuste excelente, ya que explica casi toda la variabilidad del consumo. En el conjunto de prueba se observó un error absoluto medio (MAE) de 1.22 kWh y una raíz del error cuadrático medio (RMSE) de 2.49 kWh.
+
+Como ejemplo de uso, el modelo estima un consumo de 2.59 kWh para la instalación RES-001 el 2026-07-02 20:00:00. El intervalo de predicción va de 2.21 a 3.15 kWh; al ser amplio, refleja una incertidumbre considerable en esa hora. El consumo proyectado para las próximas 24 horas es de 30.96 kWh. El pico de demanda previsto es de 2.59 kWh (hora 20:00).
+
+Para una instalación de mayor tamaño, el modelo estima un consumo de 119.62 kWh para la instalación IND-001 el 2026-07-02 12:00:00. El intervalo de predicción va de 111.94 a 125.55 kWh; al ser estrecho, indica una estimación estable. El consumo proyectado para las próximas 24 horas es de 2,447.91 kWh. El pico de demanda previsto es de 119.62 kWh (hora 12:00).
+
+Nota sobre el rango de predicción: es el rango entre los percentiles 5 y 95 de las predicciones de los árboles del Random Forest; en la prueba contuvo el valor real el 77.7 % de las veces, por lo que debe leerse como un rango orientativo y no como un intervalo de confianza del 90 %.
+
+Con técnicas de aprendizaje no supervisado (K-Means) se identificaron 6 perfiles típicos de consumo diario, con un coeficiente de silhouette de 0.662, lo que indica una separación clara entre los grupos. Además, se señalaron 20 días atípicos que conviene revisar por posibles fallas o usos anómalos.
+
+El análisis de lenguaje natural procesó 4,000 reportes de usuarios: 38.5 % son negativos, 33.7 % positivos y 27.8 % neutrales. El nivel de insatisfacción es moderado; aunque no rebasa el umbral de alerta (40 %), conviene dar seguimiento a las quejas recurrentes. Los equipos más mencionados fueron medidor (237), aire acondicionado (200), ventilador (188) y minisplit (179). Entre las entidades más frecuentes destacan CFE (559), Veracruz (473), Boca del Río (341) y Xalapa (315).
+
+Con base en los equipos que más aparecen en los reportes, se recomienda: en medidor, calibrar o sustituir medidores con lecturas dudosas y considerar medición inteligente para detectar errores de facturación; en aire acondicionado, ajustar los termostatos a 24-25 °C, dar mantenimiento a filtros y programar apagado automático fuera de horario; en ventilador, limpiar aspas, revisar rodamientos y regular la velocidad según la ocupación. Asimismo, se sugiere enfocar las auditorías energéticas primero en el sector industrial, que concentra la mayor demanda. Dado que el modelo predictivo es confiable, puede emplearse para programar mantenimientos y desplazar cargas a horarios de menor demanda.
+
+Los resultados y predicciones de este reporte pueden registrarse en la cadena de bloques para garantizar su integridad: cualquier alteración posterior modificaría su huella SHA-256 y sería detectada en la verificación.

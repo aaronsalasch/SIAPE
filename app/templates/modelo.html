@@ -9,9 +9,9 @@
   <h2>Modelo seleccionado: {{ sel }}</h2>
   <div class="kpis chicos">
     <div class="kpi"><span class="kpi-n">{{ ms.r2|num(3) }}</span><span class="kpi-t">R² (1 = perfecto)</span></div>
-    <div class="kpi"><span class="kpi-n">{{ ms.mae|num(2) }}</span><span class="kpi-t">MAE: error promedio (kWh)</span></div>
-    <div class="kpi"><span class="kpi-n">{{ ms.rmse|num(2) }}</span><span class="kpi-t">RMSE: error que penaliza los fallos grandes (kWh)</span></div>
-    <div class="kpi"><span class="kpi-n">{{ ms.mape|num(1) }} %</span><span class="kpi-t">MAPE: error porcentual</span></div>
+    <div class="kpi"><span class="kpi-n">{{ ms.mae|num(2) }}</span><span class="kpi-t">MAE (Mean Absolute Error): error promedio (kWh)</span></div>
+    <div class="kpi"><span class="kpi-n">{{ ms.rmse|num(2) }}</span><span class="kpi-t">RMSE (Root Mean Square Error): error que penaliza los fallos grandes (kWh)</span></div>
+    <div class="kpi"><span class="kpi-n">{{ ms.mape|num(1) }} %</span><span class="kpi-t">MAPE (Mean Absolute Percentage Error): error porcentual</span></div>
   </div>
   <p class="nota">Criterio de selección: {{ met.criterio_seleccion }}. Entrenado con {{ met.n_entrenamiento|num }} registros y evaluado con {{ met.n_prueba|num }} registros posteriores en el tiempo.</p>
 </section>
@@ -36,7 +36,7 @@
   <div class="tarjeta">
     <h2>Hiperparámetros</h2>
     <table class="tabla"><tbody>{% for k, v in met.hiperparametros.items() %}<tr><td>{{ k }}</td><td class="num">{{ v }}</td></tr>{% endfor %}</tbody></table>
-    <p class="nota">Son los "ajustes" del bosque aleatorio (nº de árboles, profundidad máxima, etc.), elegidos con una búsqueda ligera y validación cruzada temporal.</p>
+    <p class="nota">Son los "ajustes" del random forest (nº de árboles, profundidad máxima, etc.), se eligieron mediante una búsqueda en cuadrícula (GridSearchCV) evaluando el RMSE.</p>
   </div>
   <div class="tarjeta">
     <h2>Error por tipo de instalación</h2>

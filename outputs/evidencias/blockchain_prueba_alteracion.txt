@@ -1,12 +1,12 @@
 ======================================================================
 SIAPE - PRUEBA DE DETECCIÓN DE ALTERACIONES EN LA BLOCKCHAIN
-Fecha de ejecución: 2026-11-14 21:27:26
+Fecha de ejecución: 2026-11-16 20:08:31
 Dificultad PoW: 4 ceros iniciales | Cadena de prueba en directorio temporal
 ======================================================================
 
 PASO 1: Crear una cadena nueva (temporal) con su bloque génesis
 ----------------------------------------------------------------------
-  Bloque 0 (génesis) hash: 0000f1066922744fc24ed4324b34911d2bea2ce745d101ff233415199e4ef3df (nonce=120832)
+  Bloque 0 (génesis) hash: 0000c453d0fe8985739f5e843970dce80de972d2a245be6db9e04a93a28480b9 (nonce=11313)
   Esperado : 1
   Obtenido : 1
   Resultado: CORRECTO  (la cadena inicia con 1 bloque)
@@ -14,18 +14,18 @@ PASO 1: Crear una cadena nueva (temporal) con su bloque génesis
 PASO 2: Registrar un documento de ejemplo (reporte) en la cadena
 ----------------------------------------------------------------------
   Documento: reporte_demo.txt
-  SHA-256 del documento: 3126fee3c7520dcb57198c1e4120eb57bc07a7039570d527128c840baea445e7
-  Bloque 1: hash=00000193b19d3bff3326f95d995d376a2a42838c852c3fb0068c59f867e85ee2
-             hash_anterior=0000f1066922744fc24ed4324b34911d2bea2ce745d101ff233415199e4ef3df
-  Esperado : 0000f1066922744fc24ed4324b34911d2bea2ce745d101ff233415199e4ef3df
-  Obtenido : 0000f1066922744fc24ed4324b34911d2bea2ce745d101ff233415199e4ef3df
+  SHA-256 del documento: ae7eccadd4384aa5cb7c5695709eca96793a3b62ff97b104451ce5ef9ee48805
+  Bloque 1: hash=000043f511f183e567f165ed17b5dfac2ba1cbd1c22d106435884602345876ba
+             hash_anterior=0000c453d0fe8985739f5e843970dce80de972d2a245be6db9e04a93a28480b9
+  Esperado : 0000c453d0fe8985739f5e843970dce80de972d2a245be6db9e04a93a28480b9
+  Obtenido : 0000c453d0fe8985739f5e843970dce80de972d2a245be6db9e04a93a28480b9
   Resultado: CORRECTO  (el bloque enlaza con el génesis)
   También se registraron el bloque 2 (predicción, dict) y el 3 (métricas, texto).
 
 PASO 3: Verificar el documento SIN modificar (debe ser íntegro)
 ----------------------------------------------------------------------
-  Hash calculado : 3126fee3c7520dcb57198c1e4120eb57bc07a7039570d527128c840baea445e7
-  Hash registrado: 3126fee3c7520dcb57198c1e4120eb57bc07a7039570d527128c840baea445e7
+  Hash calculado : ae7eccadd4384aa5cb7c5695709eca96793a3b62ff97b104451ce5ef9ee48805
+  Hash registrado: ae7eccadd4384aa5cb7c5695709eca96793a3b62ff97b104451ce5ef9ee48805
   Mensaje: ÍNTEGRO: el hash coincide con el registrado en el bloque 1.
   Esperado : True
   Obtenido : True
@@ -34,8 +34,8 @@ PASO 3: Verificar el documento SIN modificar (debe ser íntegro)
 PASO 4: Modificar UN solo carácter del documento (1250 -> 1260) y verificar
 ----------------------------------------------------------------------
   Caracteres distintos: 1
-  Hash calculado : c709ffb5b0909f5cd4170d71f9bbcac1fd03cdb29ff4790e933aa3c37fab5ab7
-  Hash registrado: 3126fee3c7520dcb57198c1e4120eb57bc07a7039570d527128c840baea445e7
+  Hash calculado : 089ca3b719b3973ae7678a63ed5284f315541941e4637771857e05ce3574e0a5
+  Hash registrado: ae7eccadd4384aa5cb7c5695709eca96793a3b62ff97b104451ce5ef9ee48805
   Mensaje: MODIFICADO: el hash actual no coincide con el registrado para 'reporte_demo.txt' en el bloque 1.
   Esperado : False
   Obtenido : False
@@ -58,17 +58,17 @@ PASO 6: Validar la cadena sin alteraciones
 
 PASO 7: Alterar el bloque 1 dentro de una COPIA de la cadena (cambiar el hash_documento)
 ----------------------------------------------------------------------
-  hash_documento original del bloque 1: 3126fee3c7520dcb57198c1e4120eb57bc07a7039570d527128c840baea445e7
+  hash_documento original del bloque 1: ae7eccadd4384aa5cb7c5695709eca96793a3b62ff97b104451ce5ef9ee48805
   hash_documento alterado             : ed4550f1fec70b37af988ab0024143e8d01e24eff6ed95ae5057fa46e4c0e0d7
-  Detectado: Bloque 1: el hash guardado no coincide con su contenido (guardado 00000193b19d..., recalculado f3af1c908c0c...): el bloque fue alterado.
+  Detectado: Bloque 1: el hash guardado no coincide con su contenido (guardado 000043f511f1..., recalculado dc18458b881c...): el bloque fue alterado.
   Esperado : (False, True)
   Obtenido : (False, True)
   Resultado: CORRECTO  (cadena inválida con error en el bloque 1)
 
 PASO 8: Enlace roto: el atacante recalcula y re-mina el bloque 1 para ocultar el cambio
 ----------------------------------------------------------------------
-  Hash original del bloque 1 : 00000193b19d3bff3326f95d995d376a2a42838c852c3fb0068c59f867e85ee2
-  Hash forjado del bloque 1  : 000075057754a4cf0b397db1e679d8ca88da0a7e1f5c7e407988f040c57cddea
+  Hash original del bloque 1 : 000043f511f183e567f165ed17b5dfac2ba1cbd1c22d106435884602345876ba
+  Hash forjado del bloque 1  : 00000a8117d043f49282981a73e530d40a42af5d906f0cb4e0c74ae2b4921c90
   Detectado: Bloque 2: enlace roto, hash_anterior no coincide con el hash del bloque 1.
   Esperado : (False, True)
   Obtenido : (False, True)
@@ -79,9 +79,9 @@ PASO 9: Comprobar que la cadena original de la demo sigue válida y la real no s
   Esperado : True
   Obtenido : True
   Resultado: CORRECTO  (cadena de la demo intacta)
-  Cadena real (/home/claude/ICD/blockchain_data/cadena.json) existía antes: True
-  Esperado : 3259cb00802bba4eb89675f7ef7ddea19d78ae82db1a7e2fcf269d03af0070d3
-  Obtenido : 3259cb00802bba4eb89675f7ef7ddea19d78ae82db1a7e2fcf269d03af0070d3
+  Cadena real (C:\Users\Aaron\Cursos\ICD\blockchain_data\cadena.json) existía antes: True
+  Esperado : baacafc5ad1312f5cdbf261770ee84ec55b686f423772dd90a1f8debdbcdd05b
+  Obtenido : baacafc5ad1312f5cdbf261770ee84ec55b686f423772dd90a1f8debdbcdd05b
   Resultado: CORRECTO  (cadena real sin cambios (hash del archivo))
 
 ======================================================================

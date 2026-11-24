@@ -77,7 +77,7 @@ code { background: #eef2f7; padding: .1em .35em; border-radius: 5px; font-size: 
 .tabla { width: 100%; border-collapse: collapse; font-size: .9rem; }
 .tabla th, .tabla td { padding: .45rem .6rem; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
 .tabla thead th { background: #f1f5f9; color: var(--suave); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; position: sticky; top: 0; }
-.tabla td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tabla td.num { text-align: center; font-variant-numeric: tabular-nums; }
 .tabla tr.fila-sel { background: #eaf4fb; font-weight: 600; }
 .tabla.chica { font-size: .82rem; margin-top: .6rem; }
 .nowrap { white-space: nowrap; }

@@ -2,8 +2,8 @@
 {% block titulo %}Inicio{% endblock %}
 {% block contenido %}
 <section class="hero">
-  <h1>Análisis y predicción del consumo de energía eléctrica</h1>
-  <p>SIAPE vigila el consumo de 10 instalaciones de Veracruz (casas, comercios, industrias y escuelas), anticipa cuánta energía se usará, entiende las quejas de los usuarios y guarda una "huella digital" de cada resultado para que nadie pueda alterarlo sin que se note.</p>
+  <h1>Sistema Inteligente de Análisis, Predicción y trazabilidad Energética</h1>
+  <p>SIAPE vigila el consumo de 10 instalaciones eléctricas en Veracruz (casas, comercios, industrias y escuelas), anticipa cuánta energía se usará, entiende las quejas de los usuarios y guarda una "huella digital" de cada resultado para que nadie pueda alterarlo sin que se note.</p>
 </section>
 
 {% if faltan %}
@@ -38,32 +38,20 @@
 {% endif %}
 
 <section class="tarjeta">
-  <h2>¿Cómo funciona el sistema?</h2>
+  <h2>Arquitectura del sistema</h2>
   <p class="nota">Cada paso alimenta al siguiente. Pulsa sobre un paso para ver su sección.</p>
   <div class="flujo">
-    <a class="paso" href="{{ url_for('datos') }}"><b>1. Datos</b><span>Lecturas horarias de consumo, temperatura y humedad. Se limpian y se preparan.</span></a>
+    <a class="paso" href="{{ url_for('datos') }}"><b>1. Datos (generación y preparación)</b><span>Se generan lecturas horarias de consumo, temperatura y humedad. Se limpian y se preparan.</span></a>
     <span class="flecha">➜</span>
     <div class="paso-doble">
-      <a class="paso" href="{{ url_for('modelo') }}"><b>2a. Predicción</b><span>Un modelo aprende del pasado y estima el consumo de la siguiente hora.</span></a>
-      <a class="paso" href="{{ url_for('clusters') }}"><b>2b. Perfiles</b><span>Agrupa los días con comportamiento parecido y señala los raros.</span></a>
-      <a class="paso" href="{{ url_for('pnl') }}"><b>2c. Lenguaje natural</b><span>Lee las quejas y comentarios: sentimiento y datos clave (equipos, lugares, folios).</span></a>
+      <a class="paso" href="{{ url_for('modelo') }}"><b>2a. Predicción (ML supervisado)</b><span>Se entrena un modelo con datos históricos para estimar el consumo futuro.</span></a>
+      <a class="paso" href="{{ url_for('clusters') }}"><b>2b. Perfiles (ML no supervisado)</b><span>Agrupa los días con comportamiento similar y señala los inusuales.</span></a>
+      <a class="paso" href="{{ url_for('pnl') }}"><b>2c. Lenguaje natural (PNL)</b><span>Lee las quejas y comentarios: sentimiento y datos clave (equipos, lugares, folios).</span></a>
     </div>
     <span class="flecha">➜</span>
-    <a class="paso" href="{{ url_for('reportes') }}"><b>3. Informe</b><span>Se redacta automáticamente un informe en español con los resultados.</span></a>
+    <a class="paso" href="{{ url_for('reportes') }}"><b>3. Informes (PNL)</b><span>Se redacta automáticamente un informe en español con los resultados.</span></a>
     <span class="flecha">➜</span>
     <a class="paso destacado" href="{{ url_for('blockchain') }}"><b>4. Blockchain</b><span>Se guarda la huella digital (SHA-256) del informe y de las predicciones. Si algo cambia, se detecta.</span></a>
   </div>
-</section>
-
-<section class="dos-col">
-  <div class="tarjeta"><h2>Pruébalo</h2>
-    <ul class="lista">
-      <li><a href="{{ url_for('prediccion') }}">Predecir el consumo</a> de una instalación en una fecha y hora.</li>
-      <li><a href="{{ url_for('pnl') }}">Analizar un texto</a> de un usuario: sentimiento y entidades.</li>
-      <li><a href="{{ url_for('reportes') }}">Generar un informe</a> y registrarlo en la blockchain.</li>
-      <li><a href="{{ url_for('blockchain') }}">Verificar un archivo</a> para comprobar que no fue modificado.</li>
-    </ul></div>
-  <div class="tarjeta"><h2>Importante</h2>
-    <p>Los datos de este proyecto son <strong>simulados</strong> con fines académicos (no son lecturas reales de CFE). Las predicciones son una ayuda para decidir, no un valor oficial.</p></div>
 </section>
 {% endblock %}
